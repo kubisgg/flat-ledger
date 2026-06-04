@@ -1,7 +1,7 @@
 import { appSettings } from '../../utils/schema'
 
 const defaults = {
-  transferTitle: 'en. {energia}, zw. {zimna_woda}'
+  transferTitle: 'en. {energia}, w. {woda}'
 }
 
 export default defineEventHandler(async (event) => {

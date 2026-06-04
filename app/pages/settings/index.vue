@@ -146,7 +146,7 @@ async function saveSettings() {
           <UFormField label="Tytuł przelewu">
             <UInput
               v-model="settingsForm.transferTitle"
-              placeholder="en. {energia}, zw. {zimna_woda}"
+              placeholder="en. {energia}, w. {woda}"
               class="w-full"
             />
           </UFormField>

@@ -62,6 +62,13 @@ function isActive(item: { to: string }) {
 
         <div class="flex items-center gap-1">
           <UButton
+            icon="i-lucide-user-cog"
+            color="neutral"
+            variant="ghost"
+            to="/account"
+            aria-label="Zarządzaj kontem"
+          />
+          <UButton
             icon="i-lucide-log-out"
             color="neutral"
             variant="ghost"
