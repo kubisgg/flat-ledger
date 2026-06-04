@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     if ((existing?.count || 0) > 0) {
       throw createError({
         statusCode: 403,
-        statusMessage: 'Registration is closed',
+        statusMessage: 'Registration is closed'
       })
     }
   }

@@ -66,9 +66,21 @@ function kindLabel() {
           {{ type.name }}
         </p>
         <div class="flex items-center gap-1.5 text-sm text-stone-400">
-          <UBadge color="neutral" variant="subtle" size="sm">{{ kindLabel() }}</UBadge>
+          <UBadge
+            color="neutral"
+            variant="subtle"
+            size="sm"
+          >
+            {{ kindLabel() }}
+          </UBadge>
           <span>·</span>
-          <UBadge :color="type.isRequired ? 'info' : 'neutral'" variant="subtle" size="sm">{{ type.isRequired ? 'obowiązkowa' : 'opcjonalna' }}</UBadge>
+          <UBadge
+            :color="type.isRequired ? 'info' : 'neutral'"
+            variant="subtle"
+            size="sm"
+          >
+            {{ type.isRequired ? 'obowiązkowa' : 'opcjonalna' }}
+          </UBadge>
         </div>
       </div>
       <p class="text-stone-200">
@@ -102,9 +114,15 @@ function kindLabel() {
           v-model="draft.kind"
           class="w-full rounded-md border border-white/10 bg-stone-950 px-3 py-2 text-sm text-stone-100 outline-none focus:border-teal-400"
         >
-          <option value="fixed">Stała kwota</option>
-          <option value="metered">Licznikowa</option>
-          <option value="variable">Kwota wpisywana</option>
+          <option value="fixed">
+            Stała kwota
+          </option>
+          <option value="metered">
+            Licznikowa
+          </option>
+          <option value="variable">
+            Kwota wpisywana
+          </option>
         </select>
       </UFormField>
       <UCheckbox
@@ -113,7 +131,10 @@ function kindLabel() {
         class="pb-2"
       />
       <div class="flex gap-3">
-        <UFormField class="flex-1" :label="draft.kind === 'metered' ? 'Stawka' : 'Kwota'">
+        <UFormField
+          class="flex-1"
+          :label="draft.kind === 'metered' ? 'Stawka' : 'Kwota'"
+        >
           <UInput
             v-if="draft.kind === 'metered'"
             v-model.number="draft.unitPrice"
@@ -155,7 +176,11 @@ function kindLabel() {
             @click="confirmDelete = true"
           />
         </div>
-        <UButton icon="i-lucide-save" block @click="save">
+        <UButton
+          icon="i-lucide-save"
+          block
+          @click="save"
+        >
           Zapisz
         </UButton>
       </div>
@@ -170,8 +195,17 @@ function kindLabel() {
     :ui="{ footer: 'justify-end' }"
   >
     <template #footer>
-      <UButton label="Anuluj" color="neutral" variant="outline" @click="confirmDelete = false" />
-      <UButton label="Usuń" color="error" @click="emit('remove', type.id); confirmDelete = false" />
+      <UButton
+        label="Anuluj"
+        color="neutral"
+        variant="outline"
+        @click="confirmDelete = false"
+      />
+      <UButton
+        label="Usuń"
+        color="error"
+        @click="emit('remove', type.id); confirmDelete = false"
+      />
     </template>
   </UModal>
 </template>

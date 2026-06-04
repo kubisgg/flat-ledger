@@ -231,7 +231,10 @@ async function toggleRequired(paymentId: number, isRequired: boolean) {
                   v-if="payment.type?.isRequired"
                   class="text-sm text-stone-400"
                 >
-                  <UBadge color="success" variant="subtle">
+                  <UBadge
+                    color="success"
+                    variant="subtle"
+                  >
                     obowiązkowa
                   </UBadge>
                 </span>

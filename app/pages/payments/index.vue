@@ -11,7 +11,9 @@ const { data: paymentsData, refresh } = await useFetch('/api/payments', {
   query: { monthId: selectedMonthId, page }
 })
 
-watch(selectedMonthId, () => { page.value = 1 })
+watch(selectedMonthId, () => {
+  page.value = 1
+})
 
 const deletePaymentId = ref<number | null>(null)
 
@@ -24,92 +26,107 @@ async function confirmRemovePayment() {
 </script>
 
 <template>
-  <div class="grid gap-6 pb-20 lg:grid-cols-[380px_1fr] md:pb-0 lg:items-start">
-    <UCard class="bg-white/5 ring-white/10">
-      <template #header>
-        <h1 class="text-xl font-semibold">
-          Dodaj opłatę jedronazową
-        </h1>
-      </template>
-      <PaymentForm
-        :months="monthsData.data"
-        @saved="refresh"
-      />
-    </UCard>
+  <div>
+    <div class="grid gap-6 pb-20 lg:grid-cols-[380px_1fr] md:pb-0 lg:items-start">
+      <UCard class="bg-white/5 ring-white/10">
+        <template #header>
+          <h1 class="text-xl font-semibold">
+            Dodaj opłatę jedronazową
+          </h1>
+        </template>
+        <PaymentForm
+          :months="monthsData.data"
+          @saved="refresh"
+        />
+      </UCard>
 
-    <UCard class="bg-white/5 ring-white/10">
-      <template #header>
-        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-xl font-semibold">
-            Wszystkie opłaty
-          </h2>
-          <USelect
-            v-model="selectedMonthId"
-            :items="[{ label: 'Wszystkie miesiące', value: 'all' }, ...monthsData.data.map(month => ({ label: month.name, value: month.id }))]"
-            class="w-full sm:w-64"
-          />
-        </div>
-      </template>
-
-      <div class="divide-y divide-white/10">
-        <div
-          v-for="payment in paymentsData.data"
-          :key="payment.id"
-          class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between"
-        >
-          <div>
-            <p class="font-medium">
-              {{ payment.name }}
-            </p>
-            <p class="text-sm text-muted">
-              <span class="flex items-center gap-1.5">
-                {{ payment.month?.name || 'brak miesiąca' }}
-                <span class="text-muted">·</span>
-                <UBadge color="info" variant="subtle" size="sm">{{ payment.type?.name || 'Niestandardowa' }}</UBadge>
-              </span>
-            </p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="font-semibold">{{ formatMoney(payment.amount) }}</span>
-            <UButton
-              icon="i-lucide-trash-2"
-              color="error"
-              variant="ghost"
-              @click="deletePaymentId = payment.id"
+      <UCard class="bg-white/5 ring-white/10">
+        <template #header>
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <h2 class="text-xl font-semibold">
+              Wszystkie opłaty
+            </h2>
+            <USelect
+              v-model="selectedMonthId"
+              :items="[{ label: 'Wszystkie miesiące', value: 'all' }, ...monthsData.data.map(month => ({ label: month.name, value: month.id }))]"
+              class="w-full sm:w-64"
             />
           </div>
-        </div>
-        <p
-          v-if="!paymentsData.data.length"
-          class="py-10 text-center text-muted"
-        >
-          Brak oplat.
-        </p>
-      </div>
-      <div
-        v-if="paymentsData.total > 10"
-        class="mt-4 flex justify-center"
-      >
-        <UPagination
-          v-model:page="page"
-          :total="paymentsData.total"
-          :items-per-page="10"
-        />
-      </div>
-    </UCard>
-  </div>
+        </template>
 
-  <UModal
-    :open="deletePaymentId !== null"
-    title="Usuń opłatę"
-    description="Tej operacji nie można cofnąć."
-    :dismissible="false"
-    :ui="{ footer: 'justify-end' }"
-    @update:open="deletePaymentId = null"
-  >
-    <template #footer>
-      <UButton label="Anuluj" color="neutral" variant="outline" @click="deletePaymentId = null" />
-      <UButton label="Usuń" color="error" @click="confirmRemovePayment" />
-    </template>
-  </UModal>
+        <div class="divide-y divide-white/10">
+          <div
+            v-for="payment in paymentsData.data"
+            :key="payment.id"
+            class="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between"
+          >
+            <div>
+              <p class="font-medium">
+                {{ payment.name }}
+              </p>
+              <p class="text-sm text-muted">
+                <span class="flex items-center gap-1.5">
+                  {{ payment.month?.name || 'brak miesiąca' }}
+                  <span class="text-muted">·</span>
+                  <UBadge
+                    color="info"
+                    variant="subtle"
+                    size="sm"
+                  >{{ payment.type?.name || 'Niestandardowa' }}</UBadge>
+                </span>
+              </p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="font-semibold">{{ formatMoney(payment.amount) }}</span>
+              <UButton
+                icon="i-lucide-trash-2"
+                color="error"
+                variant="ghost"
+                @click="deletePaymentId = payment.id"
+              />
+            </div>
+          </div>
+          <p
+            v-if="!paymentsData.data.length"
+            class="py-10 text-center text-muted"
+          >
+            Brak oplat.
+          </p>
+        </div>
+        <div
+          v-if="paymentsData.total > 10"
+          class="mt-4 flex justify-center"
+        >
+          <UPagination
+            v-model:page="page"
+            :total="paymentsData.total"
+            :items-per-page="10"
+          />
+        </div>
+      </UCard>
+    </div>
+
+    <UModal
+      :open="deletePaymentId !== null"
+      title="Usuń opłatę"
+      description="Tej operacji nie można cofnąć."
+      :dismissible="false"
+      :ui="{ footer: 'justify-end' }"
+      @update:open="deletePaymentId = null"
+    >
+      <template #footer>
+        <UButton
+          label="Anuluj"
+          color="neutral"
+          variant="outline"
+          @click="deletePaymentId = null"
+        />
+        <UButton
+          label="Usuń"
+          color="error"
+          @click="confirmRemovePayment"
+        />
+      </template>
+    </UModal>
+  </div>
 </template>

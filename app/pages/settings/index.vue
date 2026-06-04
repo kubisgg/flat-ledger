@@ -158,7 +158,6 @@ async function saveSettings() {
           </UButton>
         </form>
       </UCard>
-
     </div>
 
     <UCard class="bg-white/5 ring-white/10">
