@@ -74,7 +74,7 @@ async function confirmRemoveMonth() {
 <template>
   <div>
     <div class="grid gap-6 pb-20 lg:grid-cols-[360px_1fr] md:pb-0 lg:items-start">
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <h1 class="text-xl font-semibold">
             Nowy miesiąc
@@ -119,7 +119,7 @@ async function confirmRemoveMonth() {
           </UFormField>
           <div
             v-if="types.some(type => type.isMetered)"
-            class="space-y-3 rounded-lg border border-white/10 bg-white/5 p-3"
+            class="space-y-3 rounded-lg border border-[#44475a]/50 bg-[#1e1f29] p-3"
           >
             <p class="text-sm font-medium text-stone-200">
               Aktualne liczniki
@@ -139,7 +139,7 @@ async function confirmRemoveMonth() {
           </div>
           <div
             v-if="types.some(type => type.kind === 'variable')"
-            class="space-y-3 rounded-lg border border-white/10 bg-white/5 p-3"
+            class="space-y-3 rounded-lg border border-[#44475a]/50 bg-[#1e1f29] p-3"
           >
             <p class="text-sm font-medium text-stone-200">
               Kwoty wpisywane w miesiacu
@@ -167,7 +167,7 @@ async function confirmRemoveMonth() {
         </form>
       </UCard>
 
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <h2 class="text-xl font-semibold">
             Miesiące
@@ -177,7 +177,7 @@ async function confirmRemoveMonth() {
           <div
             v-for="month in months.data"
             :key="month.id"
-            class="flex flex-col gap-3 rounded-lg border border-white/10 bg-stone-950/40 p-4 sm:flex-row sm:items-center sm:justify-between"
+            class="flex flex-col gap-3 rounded-lg border border-[#44475a]/50 bg-[#282a36] p-4 sm:flex-row sm:items-center sm:justify-between"
           >
             <NuxtLink
               :to="`/months/${month.id}`"

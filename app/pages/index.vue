@@ -16,15 +16,15 @@ const chartOptions = computed(() => ({
     animations: { enabled: true }
   },
   theme: { mode: 'dark' },
-  colors: ['#f472b6', '#fb923c', '#60a5fa', '#2dd4bf', '#a78bfa', '#34d399'],
+  colors: ['#ff79c6', '#ffb86c', '#8be9fd', '#bd93f9', '#50fa7b', '#f1fa8c'],
   stroke: { curve: 'smooth', width: 2 },
-  grid: { borderColor: 'rgba(255,255,255,0.08)' },
+  grid: { borderColor: 'rgba(68,71,90,0.6)' },
   xaxis: {
     categories: allLabels.value,
-    labels: { style: { colors: '#a8a29e' } }
+    labels: { style: { colors: '#6272a4' } }
   },
-  yaxis: { labels: { style: { colors: '#a8a29e' } } },
-  legend: { labels: { colors: '#e7e5e4' } },
+  yaxis: { labels: { style: { colors: '#6272a4' } } },
+  legend: { labels: { colors: '#f8f8f2' } },
   tooltip: { theme: 'dark' }
 }))
 
@@ -47,10 +47,10 @@ const chartSeries = computed(() => {
   <div class="space-y-6 pb-20 md:pb-0">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="text-sm text-muted">
+        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
           Obecny miesiąc
         </p>
-        <h1 class="text-3xl font-semibold">
+        <h1 class="mt-1 text-3xl font-semibold">
           {{ data?.month?.name || 'Brak miesięcy' }}
         </h1>
       </div>
@@ -63,22 +63,23 @@ const chartSeries = computed(() => {
     </div>
 
     <div class="grid gap-3 sm:grid-cols-2">
-      <UCard class="bg-white/5 ring-white/10">
-        <p class="text-sm text-muted">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
+        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
           Suma
         </p>
-        <p class="mt-2 text-2xl font-semibold">
+        <p class="mt-2 text-2xl font-semibold" style="color: #f8f8f2">
           {{ formatMoney(data?.total) }}
         </p>
       </UCard>
-      <UCard class="bg-white/5 ring-white/10">
-        <p class="text-sm text-muted">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
+        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
           Status
         </p>
         <UBadge
           class="mt-3"
           :color="data?.status === 'paid' ? 'success' : 'warning'"
           variant="subtle"
+          size="lg"
         >
           {{ statusLabel }}
         </UBadge>
@@ -90,15 +91,15 @@ const chartSeries = computed(() => {
         <UCard
           v-for="type in meterHistory"
           :key="type.id"
-          class="bg-white/5 ring-white/10"
+          class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-md shadow-black/30"
         >
           <div class="flex items-start justify-between">
             <div>
-              <p class="text-sm text-muted">
+              <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
                 {{ type.name }}
               </p>
               <p class="mt-1 text-2xl font-semibold">
-                {{ type.currentUsage }} <span class="text-base text-muted">{{ type.unit }}</span>
+                {{ type.currentUsage }} <span class="text-base" style="color: #6272a4">{{ type.unit }}</span>
               </p>
             </div>
             <UBadge
@@ -112,14 +113,15 @@ const chartSeries = computed(() => {
           </div>
           <p
             v-if="type.previousUsage !== null"
-            class="mt-1 text-xs text-muted"
+            class="mt-1 text-xs"
+            style="color: #6272a4"
           >
             poprzednio: {{ type.previousUsage }} {{ type.unit }}
           </p>
         </UCard>
       </div>
 
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-xl shadow-black/40">
         <template #header>
           <h2 class="text-lg font-semibold">
             Zużycie - ostatnie 12 miesięcy
@@ -132,13 +134,16 @@ const chartSeries = computed(() => {
             :options="chartOptions"
             :series="chartSeries"
           />
+          <template #fallback>
+            <div class="skeleton-shimmer h-73.75 w-full rounded-lg" />
+          </template>
         </ClientOnly>
       </UCard>
     </template>
 
     <UCard
       v-if="data?.month"
-      class="bg-white/5 ring-white/10"
+      class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/30"
     >
       <template #header>
         <div class="flex items-center justify-between">
@@ -157,10 +162,10 @@ const chartSeries = computed(() => {
         <div
           v-for="payment in data.payments"
           :key="payment.id"
-          class="flex items-center justify-between rounded-lg border border-white/10 bg-stone-950/40 px-3 py-2"
+          class="flex items-center justify-between rounded-lg border border-[#44475a]/50 bg-[#282a36] px-3 py-2 transition-colors hover:border-primary-400/30 hover:bg-[#282a36]"
         >
-          <span class="text-sm font-medium">{{ payment.name }}</span>
-          <span class="text-sm font-semibold">{{ formatMoney(payment.amount) }}</span>
+          <span class="text-sm font-medium" style="color: #f8f8f2">{{ payment.name }}</span>
+          <span class="text-sm font-semibold" style="color: #f8f8f2">{{ formatMoney(payment.amount) }}</span>
         </div>
       </div>
     </UCard>

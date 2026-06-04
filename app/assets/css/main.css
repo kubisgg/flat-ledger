@@ -2,23 +2,60 @@
 @import "@nuxt/ui";
 
 @theme static {
-  --font-sans: 'Aptos', 'Public Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans', 'Aptos', ui-sans-serif, system-ui, sans-serif;
 
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #5eead4;
-  --color-primary-400: #2dd4bf;
-  --color-primary-500: #14b8a6;
-  --color-primary-600: #0d9488;
-  --color-primary-700: #0f766e;
-  --color-primary-800: #115e59;
-  --color-primary-900: #134e4a;
-  --color-primary-950: #042f2e;
+  /* Dracula purple */
+  --color-primary-50: #f5f0ff;
+  --color-primary-100: #ede0ff;
+  --color-primary-200: #d9beff;
+  --color-primary-300: #c9a9ff;
+  --color-primary-400: #bd93f9;
+  --color-primary-500: #a87cf0;
+  --color-primary-600: #8b5ed8;
+  --color-primary-700: #6d42b8;
+  --color-primary-800: #4e2d8e;
+  --color-primary-900: #32196e;
+  --color-primary-950: #1a0a45;
 }
 
 body {
   min-height: 100vh;
-  background: #171614;
-  color: #f2eadc;
+  background-color: #282a36;
+  background-image: radial-gradient(ellipse 65% 45% at 8% 0%, rgba(189, 147, 249, 0.07) 0%, transparent 55%);
+  color: #f8f8f2;
+}
+
+h1, h2, h3 {
+  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #21222c 25%, #44475a 50%, #21222c 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
+/* Override Nuxt UI dark mode tokens with Dracula palette */
+.dark {
+  --ui-bg: #1e1f29;
+  --ui-bg-muted: #21222c;
+  --ui-bg-elevated: #21222c;
+  --ui-bg-accented: #44475a;
+  --ui-bg-inverted: #f8f8f2;
+  --ui-border: rgba(68, 71, 90, 0.5);
+  --ui-border-muted: rgba(68, 71, 90, 0.4);
+  --ui-border-accented: rgba(68, 71, 90, 0.65);
+  --ui-border-inverted: #f8f8f2;
+  --ui-text-dimmed: #6272a4;
+  --ui-text-muted: #6272a4;
+  --ui-text-toned: #9aa0c2;
+  --ui-text: #cdd1e8;
+  --ui-text-highlighted: #f8f8f2;
+  --ui-text-inverted: #282a36;
 }

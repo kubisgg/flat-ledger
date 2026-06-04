@@ -52,7 +52,7 @@ async function saveSettings() {
 <template>
   <div class="grid gap-6 pb-20 lg:grid-cols-[360px_1fr] md:pb-0">
     <div class="space-y-6">
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <div>
             <h1 class="text-xl font-semibold text-stone-50">
@@ -75,7 +75,7 @@ async function saveSettings() {
           <UFormField label="Typ">
             <select
               v-model="form.kind"
-              class="w-full rounded-md border border-white/10 bg-stone-950 px-3 py-2 text-sm text-stone-100 outline-none focus:border-teal-400"
+              class="w-full rounded-md border border-[#44475a]/60 bg-default px-3 py-2 text-sm text-[#f8f8f2] outline-none focus:border-primary-400"
             >
               <option value="fixed">
                 Stała kwota
@@ -130,7 +130,7 @@ async function saveSettings() {
         </form>
       </UCard>
 
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <div>
             <h2 class="text-xl font-semibold text-stone-50">
@@ -160,7 +160,7 @@ async function saveSettings() {
       </UCard>
     </div>
 
-    <UCard class="bg-white/5 ring-white/10">
+    <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
       <template #header>
         <div>
           <p class="text-sm text-stone-400">

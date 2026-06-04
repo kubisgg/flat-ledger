@@ -27,8 +27,8 @@ async function confirmRemovePayment() {
 
 <template>
   <div>
-    <div class="grid gap-6 pb-20 lg:grid-cols-[380px_1fr] md:pb-0 lg:items-start">
-      <UCard class="bg-white/5 ring-white/10">
+    <div class="grid gap-6 pb-20 lg:grid-cols-[360px_1fr] md:pb-0 lg:items-start">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <h1 class="text-xl font-semibold">
             Dodaj opłatę jedronazową
@@ -40,7 +40,7 @@ async function confirmRemovePayment() {
         />
       </UCard>
 
-      <UCard class="bg-white/5 ring-white/10">
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
         <template #header>
           <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-xl font-semibold">
@@ -54,7 +54,7 @@ async function confirmRemovePayment() {
           </div>
         </template>
 
-        <div class="divide-y divide-white/10">
+        <div class="divide-y divide-[#44475a]/30">
           <div
             v-for="payment in paymentsData.data"
             :key="payment.id"

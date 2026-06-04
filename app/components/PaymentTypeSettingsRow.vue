@@ -56,7 +56,7 @@ function kindLabel() {
 </script>
 
 <template>
-  <div class="rounded-lg border border-white/10 bg-stone-950/40 p-4">
+  <div class="rounded-lg border border-[#44475a]/50 bg-[#282a36] p-4">
     <div
       v-if="!editing"
       class="grid gap-3 md:grid-cols-[1.4fr_1fr_1fr_auto] md:items-center"
@@ -112,7 +112,7 @@ function kindLabel() {
       <UFormField label="Typ">
         <select
           v-model="draft.kind"
-          class="w-full rounded-md border border-white/10 bg-stone-950 px-3 py-2 text-sm text-stone-100 outline-none focus:border-teal-400"
+          class="w-full rounded-md border border-[#44475a]/60 bg-default px-3 py-2 text-sm text-[#f8f8f2] outline-none focus:border-primary-400"
         >
           <option value="fixed">
             Stała kwota

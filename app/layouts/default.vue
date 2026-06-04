@@ -13,33 +13,37 @@ async function logout() {
   await authClient.signOut()
   await navigateTo('/login')
 }
+
+function isActive(item: { to: string }) {
+  return route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to))
+}
 </script>
 
 <template>
   <div
     v-if="route.path === '/login'"
-    class="min-h-screen bg-[#171614] text-[#f2eadc]"
+    class="min-h-screen text-[#f8f8f2]"
   >
     <slot />
   </div>
 
   <div
     v-else
-    class="min-h-screen bg-[#171614] text-[#f2eadc]"
+    class="min-h-screen text-[#f8f8f2]"
   >
-    <header class="sticky top-0 z-20 border-b border-white/10 bg-[#171614]/95 backdrop-blur">
+    <header class="sticky top-0 z-20 border-b border-[#44475a]/60 bg-[#21222c]/95 backdrop-blur-md">
       <UContainer class="flex h-16 items-center justify-between gap-4">
         <NuxtLink
           to="/"
-          class="flex items-center gap-3 font-semibold"
+          class="flex items-center gap-3"
         >
-          <span class="grid size-9 place-items-center rounded-md bg-teal-500 text-stone-950 shadow-sm">
+          <span class="grid size-9 place-items-center rounded-lg bg-linear-to-br from-primary-400 to-primary-700 text-white shadow-lg shadow-purple-950/60 ring-1 ring-primary-400/25">
             <UIcon
               name="i-lucide-home"
               class="size-5"
             />
           </span>
-          <span>Flat Ledger</span>
+          <span class="font-semibold tracking-tight" style="font-family: 'Outfit', sans-serif; color: #f8f8f2">Flat Ledger</span>
         </NuxtLink>
 
         <nav class="hidden items-center gap-1 md:flex">
@@ -48,8 +52,8 @@ async function logout() {
             :key="item.to"
             :to="item.to"
             :icon="item.icon"
-            :variant="route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to)) ? 'solid' : 'ghost'"
-            color="neutral"
+            :color="isActive(item) ? 'primary' : 'neutral'"
+            :variant="isActive(item) ? 'subtle' : 'ghost'"
             size="sm"
           >
             {{ item.label }}
@@ -74,15 +78,15 @@ async function logout() {
       </UContainer>
     </main>
 
-    <nav class="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-[#171614]/95 p-2 backdrop-blur md:hidden">
+    <nav class="fixed inset-x-0 bottom-0 z-20 border-t border-[#44475a]/60 bg-[#21222c]/95 p-2 backdrop-blur-md md:hidden">
       <div class="grid grid-cols-4 gap-1">
         <UButton
           v-for="item in nav"
           :key="item.to"
           :to="item.to"
           :icon="item.icon"
-          :variant="route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to)) ? 'soft' : 'ghost'"
-          color="neutral"
+          :color="isActive(item) ? 'primary' : 'neutral'"
+          :variant="isActive(item) ? 'soft' : 'ghost'"
           size="sm"
           block
         >
