@@ -1,0 +1,19 @@
+services:
+  flat-ledger:
+    build: .
+    container_name: flat-ledger
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: /app/data/flat-ledger.sqlite
+      AUTH_SECRET: ${AUTH_SECRET}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      ADMIN_NAME: ${ADMIN_NAME:-Admin}
+    volumes:
+      - flat-ledger-data:/app/data
+
+volumes:
+  flat-ledger-data:
