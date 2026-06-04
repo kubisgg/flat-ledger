@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "prepare": "husky"
   },
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.6.14",
@@ -29,8 +30,13 @@
     "@types/better-sqlite3": "^7.6.13",
     "drizzle-kit": "^0.31.7",
     "eslint": "^10.4.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.7",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.3"
   },
-  "packageManager": "pnpm@11.5.0"
+  "packageManager": "pnpm@11.5.0",
+  "lint-staged": {
+    "*.{vue,ts,js}": "eslint --fix"
+  }
 }

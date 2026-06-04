@@ -47,7 +47,10 @@ const chartSeries = computed(() => {
   <div class="space-y-6 pb-20 md:pb-0">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
+        <p
+          class="text-xs font-medium uppercase tracking-widest"
+          style="color: #6272a4"
+        >
           Obecny miesiąc
         </p>
         <h1 class="mt-1 text-3xl font-semibold">
@@ -64,15 +67,24 @@ const chartSeries = computed(() => {
 
     <div class="grid gap-3 sm:grid-cols-2">
       <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
-        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
+        <p
+          class="text-xs font-medium uppercase tracking-widest"
+          style="color: #6272a4"
+        >
           Suma
         </p>
-        <p class="mt-2 text-2xl font-semibold" style="color: #f8f8f2">
+        <p
+          class="mt-2 text-2xl font-semibold"
+          style="color: #f8f8f2"
+        >
           {{ formatMoney(data?.total) }}
         </p>
       </UCard>
       <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
-        <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
+        <p
+          class="text-xs font-medium uppercase tracking-widest"
+          style="color: #6272a4"
+        >
           Status
         </p>
         <UBadge
@@ -95,11 +107,17 @@ const chartSeries = computed(() => {
         >
           <div class="flex items-start justify-between">
             <div>
-              <p class="text-xs font-medium uppercase tracking-widest" style="color: #6272a4">
+              <p
+                class="text-xs font-medium uppercase tracking-widest"
+                style="color: #6272a4"
+              >
                 {{ type.name }}
               </p>
               <p class="mt-1 text-2xl font-semibold">
-                {{ type.currentUsage }} <span class="text-base" style="color: #6272a4">{{ type.unit }}</span>
+                {{ type.currentUsage }} <span
+                  class="text-base"
+                  style="color: #6272a4"
+                >{{ type.unit }}</span>
               </p>
             </div>
             <UBadge
@@ -164,8 +182,14 @@ const chartSeries = computed(() => {
           :key="payment.id"
           class="flex items-center justify-between rounded-lg border border-[#44475a]/50 bg-[#282a36] px-3 py-2 transition-colors hover:border-primary-400/30 hover:bg-[#282a36]"
         >
-          <span class="text-sm font-medium" style="color: #f8f8f2">{{ payment.name }}</span>
-          <span class="text-sm font-semibold" style="color: #f8f8f2">{{ formatMoney(payment.amount) }}</span>
+          <span
+            class="text-sm font-medium"
+            style="color: #f8f8f2"
+          >{{ payment.name }}</span>
+          <span
+            class="text-sm font-semibold"
+            style="color: #f8f8f2"
+          >{{ formatMoney(payment.amount) }}</span>
         </div>
       </div>
     </UCard>

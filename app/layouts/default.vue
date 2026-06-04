@@ -43,7 +43,10 @@ function isActive(item: { to: string }) {
               class="size-5"
             />
           </span>
-          <span class="font-semibold tracking-tight" style="font-family: 'Outfit', sans-serif; color: #f8f8f2">Flat Ledger</span>
+          <span
+            class="font-semibold tracking-tight"
+            style="font-family: 'Outfit', sans-serif; color: #f8f8f2"
+          >Flat Ledger</span>
         </NuxtLink>
 
         <nav class="hidden items-center gap-1 md:flex">
