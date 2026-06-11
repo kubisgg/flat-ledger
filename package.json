@@ -26,7 +26,7 @@
     "vue3-apexcharts": "^1.11.1"
   },
   "devDependencies": {
-    "@nuxt/eslint": "^1.15.2",
+    "@nuxt/eslint": "^1.16.0",
     "@types/better-sqlite3": "^7.6.13",
     "drizzle-kit": "^0.31.7",
     "eslint": "^10.4.1",
