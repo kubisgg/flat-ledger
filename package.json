@@ -35,7 +35,12 @@
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.4"
   },
-  "packageManager": "pnpm@11.5.0",
+  "packageManager": "pnpm@11.5.2",
+  "pnpm": {
+    "patchedDependencies": {
+      "h3@2.0.1-rc.22": "patches/h3@2.0.1-rc.22.patch"
+    }
+  },
   "lint-staged": {
     "*.{vue,ts,js}": "eslint --fix"
   }

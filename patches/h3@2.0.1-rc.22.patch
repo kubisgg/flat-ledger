@@ -1,0 +1,40 @@
+diff --git a/dist/h3.mjs b/dist/h3.mjs
+index 0ddb766541c3fefcd37e810a89fa5d57a3593f20..5a834f3b5e108473b7546f70dc4f9925b181c7ee 100644
+--- a/dist/h3.mjs
++++ b/dist/h3.mjs
+@@ -581,7 +581,10 @@ function toRequest(input, options) {
+ 	return input;
+ }
+ function getQuery(event) {
+-	return parseQuery((event.url || new URL(event.req.url)).search.slice(1));
++	if (event.url) return parseQuery(event.url.search.slice(1));
++	const rawUrl = event.req?.url || "/";
++	const fullUrl = rawUrl.startsWith("http") ? rawUrl : `http://localhost${rawUrl}`;
++	return parseQuery(new URL(fullUrl).search.slice(1));
+ }
+ function getValidatedQuery(event, validate, options) {
+ 	return validateData(getQuery(event), validate, options);
+@@ -2615,11 +2618,21 @@ function isError(input) {
+ }
+ const getRequestPath = (event) => event.path;
+ function getRequestHeader(event, name) {
+-	return event.req.headers.get(name) || void 0;
++	const h = event.req.headers;
++	if (typeof h.get === "function") return h.get(name) || void 0;
++	const lname = name.toLowerCase();
++	const val = h[lname];
++	return val ? (Array.isArray(val) ? val.join(", ") : String(val)) : void 0;
+ }
+ const getHeader = getRequestHeader;
+ function getRequestHeaders(event) {
+-	return Object.fromEntries(event.req.headers.entries());
++	const h = event.req.headers;
++	if (typeof h.entries === "function") return Object.fromEntries(h.entries());
++	return Object.fromEntries(
++		Object.entries(h)
++			.filter(([, v]) => v != null)
++			.map(([k, v]) => [k, Array.isArray(v) ? v.join(", ") : String(v)])
++	);
+ }
+ const getHeaders = getRequestHeaders;
+ function getMethod(event, defaultMethod = "GET") {

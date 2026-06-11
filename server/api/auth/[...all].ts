@@ -1,5 +1,4 @@
 import { count } from 'drizzle-orm'
-import { toWebRequest } from 'h3'
 import { auth } from '../../utils/auth'
 import { users } from '../../utils/schema'
 
@@ -18,5 +17,18 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  return auth.handler(toWebRequest(event))
+  const nodeReq = event.node.req
+  const method = nodeReq.method || 'GET'
+  const url = new URL(nodeReq.url!, `http://${nodeReq.headers.host || 'localhost'}`)
+  const headers = new Headers(nodeReq.headers as HeadersInit)
+  const request = new Request(url, {
+    method,
+    headers,
+    ...(method !== 'GET' && method !== 'HEAD' && {
+      body: nodeReq as unknown as BodyInit,
+      duplex: 'half'
+    })
+  })
+
+  return auth.handler(request)
 })

@@ -5,3 +5,5 @@ allowBuilds:
   esbuild: false
   unrs-resolver: false
   vue-demi: false
+patchedDependencies:
+  h3@2.0.1-rc.22: patches/h3@2.0.1-rc.22.patch
