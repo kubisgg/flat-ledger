@@ -1,5 +1,5 @@
 export function useMoney() {
-  const floorMoney = (value: number) => Math.floor(value * 100) / 100
+  const floorMoney = (value: number) => Math.round(value)
   const formatMoney = (value: number | null | undefined) => new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN'
