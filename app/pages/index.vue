@@ -2,6 +2,7 @@
 const { formatMoney } = useMoney()
 const { data } = await useFetch('/api/dashboard')
 const { data: meterHistory } = await useFetch('/api/dashboard/meter-history')
+const { data: session } = await useFetch('/api/session')
 
 const statusLabel = computed(() => ({
   paid: 'opłacony',
@@ -47,6 +48,9 @@ const chartSeries = computed(() => {
   <div class="space-y-6 pb-20 md:pb-0">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
       <div>
+        <h1 class="mt-1 mb-8 text-5xl font-bold">
+          Cześć, {{ session?.user?.name || 'użytkowniku' }}!
+        </h1>
         <p
           class="text-xs font-medium uppercase tracking-widest"
           style="color: #6272a4"
