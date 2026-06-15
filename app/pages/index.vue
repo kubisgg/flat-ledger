@@ -24,10 +24,37 @@ const chartOptions = computed(() => ({
     categories: allLabels.value,
     labels: { style: { colors: '#6272a4' } }
   },
-  yaxis: { labels: { style: { colors: '#6272a4' } } },
+  yaxis: yaxisConfig.value,
   legend: { labels: { colors: '#f8f8f2' } },
   tooltip: { theme: 'dark' }
 }))
+
+const units = computed(() => {
+  if (!meterHistory.value?.length) return []
+  return [...new Set(meterHistory.value.map(t => t.unit || ''))]
+})
+
+const seriesName = (type: { name: string, unit?: string | null }) =>
+  `${type.name}${type.unit ? ` (${type.unit})` : ''}`
+
+const unitSeriesNames = computed(() => {
+  const map: Record<string, string[]> = {}
+  for (const type of meterHistory.value || []) {
+    const u = type.unit || '';
+    (map[u] ||= []).push(seriesName(type))
+  }
+  return map
+})
+
+// one yaxis per unit so different scales stay readable
+const yaxisConfig = computed(() =>
+  units.value.map((unit, i) => ({
+    seriesName: unitSeriesNames.value[unit],
+    opposite: i > 0,
+    title: { text: unit || undefined, style: { color: '#6272a4' } },
+    labels: { style: { colors: '#6272a4' } }
+  }))
+)
 
 const allLabels = computed(() => {
   if (!meterHistory.value?.length) return []
@@ -38,7 +65,7 @@ const allLabels = computed(() => {
 const chartSeries = computed(() => {
   if (!meterHistory.value?.length) return []
   return meterHistory.value.map(type => ({
-    name: `${type.name}${type.unit ? ` (${type.unit})` : ''}`,
+    name: seriesName(type),
     data: type.history.map(h => h.usage)
   }))
 })
