@@ -125,12 +125,12 @@ const chartSeries = computed(() => {
               </p>
             </div>
             <UBadge
-              v-if="type.changePercent !== null"
-              :color="type.changePercent > 0 ? 'error' : type.changePercent < 0 ? 'success' : 'neutral'"
+              v-if="type.change"
+              :color="type.change.sign > 0 ? 'error' : type.change.sign < 0 ? 'success' : 'neutral'"
               variant="subtle"
               class="mt-1"
             >
-              {{ type.changePercent > 0 ? '+' : '' }}{{ type.changePercent }}%
+              {{ type.change.text }}
             </UBadge>
           </div>
           <p

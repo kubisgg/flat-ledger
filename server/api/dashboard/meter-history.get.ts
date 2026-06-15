@@ -33,9 +33,16 @@ export default defineEventHandler(async (event) => {
     const current = last13[last13.length - 1]
     if (!current) continue
     const previous = last13[last13.length - 2]
-    const changePercent = previous && previous.usage > 0
-      ? Math.round(((current.usage - previous.usage) / previous.usage) * 100)
-      : null
+    let change: { text: string, sign: number } | null = null
+    if (previous) {
+      if (previous.usage > 0) {
+        const pct = Math.round(((current.usage - previous.usage) / previous.usage) * 100)
+        change = { text: `${pct > 0 ? '+' : ''}${pct}%`, sign: Math.sign(pct) }
+      } else {
+        const delta = current.usage - previous.usage
+        change = { text: `${delta > 0 ? '+' : ''}${delta} ${current.unit}`, sign: Math.sign(delta) }
+      }
+    }
 
     result.push({
       id: current.typeId,
@@ -43,7 +50,7 @@ export default defineEventHandler(async (event) => {
       unit: current.unit,
       currentUsage: current.usage,
       previousUsage: previous?.usage ?? null,
-      changePercent,
+      change,
       history: last13.slice(-12).map(r => ({
         month: r.month,
         year: r.year,
