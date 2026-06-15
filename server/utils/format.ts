@@ -4,7 +4,7 @@ export function toNumber(value: unknown, fallback = 0) {
 }
 
 export function floorMoney(value: number) {
-  return Math.round(value)
+  return Math.floor(value * 100) / 100
 }
 
 export function normalizeDate(value: unknown) {
