@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     kind: kind as 'fixed' | 'metered' | 'variable',
     isMetered: kind === 'metered',
     isRequired: body.isRequired !== false,
+    defaultActive: body.defaultActive === true,
     defaultAmount: body.defaultAmount === '' ? null : Number(body.defaultAmount || 0),
     unitPrice: body.unitPrice === '' ? null : Number(body.unitPrice || 0),
     unit: body.unit || null,

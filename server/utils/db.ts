@@ -89,6 +89,7 @@ function runMigrations(client: Database.Database) {
       kind TEXT NOT NULL DEFAULT 'fixed',
       is_metered INTEGER NOT NULL DEFAULT 0,
       is_required INTEGER NOT NULL DEFAULT 1,
+      default_active INTEGER NOT NULL DEFAULT 0,
       default_amount REAL,
       unit_price REAL,
       unit TEXT,

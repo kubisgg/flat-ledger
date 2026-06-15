@@ -64,6 +64,7 @@ export const paymentTypes = sqliteTable('payment_types', {
   kind: text('kind', { enum: ['fixed', 'metered', 'variable'] }).notNull().default('fixed'),
   isMetered: integer('is_metered', { mode: 'boolean' }).notNull().default(false),
   isRequired: integer('is_required', { mode: 'boolean' }).notNull().default(true),
+  defaultActive: integer('default_active', { mode: 'boolean' }).notNull().default(false),
   defaultAmount: real('default_amount'),
   unitPrice: real('unit_price'),
   unit: text('unit'),

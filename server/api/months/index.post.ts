@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
       amount: type.kind === 'variable' ? floorMoney(toNumber(variableAmounts[String(type.id)], type.defaultAmount || 0)) : type.defaultAmount || 0,
       calculatedAmount: null,
       isManualAmount: type.kind !== 'metered',
-      isRequired: type.isRequired,
+      isRequired: type.isRequired || Boolean(type.defaultActive),
       note: type.notes || null
     }).returning().get()
 

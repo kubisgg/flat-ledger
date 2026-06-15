@@ -19,7 +19,7 @@ interface MonthPayment {
 const route = useRoute()
 const router = useRouter()
 const toast = useToast()
-const { formatMoney } = useMoney()
+const { formatMoney, formatExact } = useMoney()
 const { data, refresh } = await useFetch(`/api/months/${route.params.id}`)
 const { data: settings } = await useFetch('/api/settings', {
   default: () => ({ transferTitle: 'en. {energia}, zw. {woda}' })
@@ -174,9 +174,6 @@ async function toggleRequired(paymentId: number, isRequired: boolean) {
       <template #header>
         <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p class="text-sm text-stone-400">
-              Kwoty i stawki sa z ustawien
-            </p>
             <h2 class="text-xl font-semibold text-stone-50">
               Rozliczenie
             </h2>
@@ -278,12 +275,23 @@ async function toggleRequired(paymentId: number, isRequired: boolean) {
                 />
               </td>
               <td class="py-3 pr-4 text-right font-semibold text-stone-100">
-                {{ formatMoney(paymentAmount(payment)) }}
+                {{ formatExact(paymentAmount(payment)) }}
               </td>
             </tr>
           </tbody>
           <tfoot>
             <tr class="border-t border-white/20">
+              <td
+                colspan="6"
+                class="py-2 pr-4 text-right text-sm text-stone-400"
+              >
+                Razem przed zaokrągleniem
+              </td>
+              <td class="py-2 pr-4 text-right text-sm font-medium text-stone-300">
+                {{ formatExact(liveTotal) }}
+              </td>
+            </tr>
+            <tr>
               <td
                 colspan="6"
                 class="py-4 pr-4 text-right font-semibold text-stone-100"

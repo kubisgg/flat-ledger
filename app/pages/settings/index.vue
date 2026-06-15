@@ -10,6 +10,7 @@ const form = reactive({
   name: '',
   kind: 'fixed' as 'fixed' | 'metered' | 'variable',
   isRequired: true,
+  defaultActive: false,
   defaultAmount: 0,
   unitPrice: 0,
   unit: '',
@@ -24,6 +25,7 @@ async function createType() {
   form.name = ''
   form.kind = 'fixed'
   form.isRequired = true
+  form.defaultActive = false
   form.defaultAmount = 0
   form.unitPrice = 0
   form.unit = ''
@@ -92,6 +94,11 @@ async function saveSettings() {
             <UCheckbox
               v-model="form.isRequired"
               label="Obowiązkowa"
+            />
+            <UCheckbox
+              v-model="form.defaultActive"
+              label="Domyślnie aktywna"
+              :disabled="form.isRequired"
             />
           </div>
           <UFormField :label="form.kind === 'metered' ? 'Stawka za jednostkę' : 'Domyślna kwota'">

@@ -13,6 +13,7 @@ export interface PaymentType {
   kind: 'fixed' | 'metered' | 'variable'
   isMetered: boolean
   isRequired: boolean
+  defaultActive: boolean
   defaultAmount?: number | null
   unitPrice?: number | null
   unit?: string | null

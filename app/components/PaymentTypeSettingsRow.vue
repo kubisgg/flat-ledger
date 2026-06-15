@@ -16,12 +16,13 @@ const draft = reactive({
   name: props.type.name,
   kind: props.type.kind || (props.type.isMetered ? 'metered' : 'fixed'),
   isRequired: props.type.isRequired,
+  defaultActive: props.type.defaultActive || false,
   defaultAmount: props.type.defaultAmount || 0,
   unitPrice: props.type.unitPrice || 0,
   unit: props.type.unit || '',
   notes: props.type.notes || ''
 })
-const { formatMoney } = useMoney()
+const { formatExact } = useMoney()
 
 function unitPriceLabel() {
   const value = new Intl.NumberFormat('pl-PL', {
@@ -36,6 +37,7 @@ function startEdit() {
   draft.name = props.type.name
   draft.kind = props.type.kind || (props.type.isMetered ? 'metered' : 'fixed')
   draft.isRequired = props.type.isRequired
+  draft.defaultActive = props.type.defaultActive || false
   draft.defaultAmount = props.type.defaultAmount || 0
   draft.unitPrice = props.type.unitPrice || 0
   draft.unit = props.type.unit || ''
@@ -75,16 +77,25 @@ function kindLabel() {
           </UBadge>
           <span>·</span>
           <UBadge
-            :color="type.isRequired ? 'info' : 'neutral'"
+            v-if="type.isRequired"
+            color="info"
             variant="subtle"
             size="sm"
           >
-            {{ type.isRequired ? 'obowiązkowa' : 'opcjonalna' }}
+            obowiązkowa
+          </UBadge>
+          <UBadge
+            v-else
+            :color="type.defaultActive ? 'success' : 'neutral'"
+            variant="subtle"
+            size="sm"
+          >
+            {{ type.defaultActive ? 'domyślnie aktywna' : 'domyślnie nieaktywna' }}
           </UBadge>
         </div>
       </div>
       <p class="text-stone-200">
-        {{ type.kind === 'metered' || type.isMetered ? unitPriceLabel() : formatMoney(type.defaultAmount) }}
+        {{ type.kind === 'metered' || type.isMetered ? unitPriceLabel() : formatExact(type.defaultAmount) }}
       </p>
       <p class="text-sm text-stone-400">
         {{ type.kind === 'metered' || type.isMetered ? (type.unit || 'bez jednostki') : '' }}
@@ -125,11 +136,17 @@ function kindLabel() {
           </option>
         </select>
       </UFormField>
-      <UCheckbox
-        v-model="draft.isRequired"
-        label="Obowiązkowa"
-        class="pb-2"
-      />
+      <div class="flex flex-col gap-1 pb-2">
+        <UCheckbox
+          v-model="draft.isRequired"
+          label="Obowiązkowa"
+        />
+        <UCheckbox
+          v-model="draft.defaultActive"
+          label="Domyślnie aktywna"
+          :disabled="draft.isRequired"
+        />
+      </div>
       <div class="flex gap-3">
         <UFormField
           class="flex-1"

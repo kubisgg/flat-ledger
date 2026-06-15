@@ -4,6 +4,12 @@ export function useMoney() {
     style: 'currency',
     currency: 'PLN'
   }).format(floorMoney(value || 0))
+  const formatExact = (value: number | null | undefined) => new Intl.NumberFormat('pl-PL', {
+    style: 'currency',
+    currency: 'PLN',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  }).format(value || 0)
 
-  return { formatMoney }
+  return { formatMoney, formatExact }
 }
