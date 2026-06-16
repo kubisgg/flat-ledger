@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { formatMoney } = useMoney()
+const { formatMoney, formatExact } = useMoney()
 const { data } = await useFetch('/api/dashboard')
 const { data: meterHistory } = await useFetch('/api/dashboard/meter-history')
 const { data: session } = await useFetch('/api/session')
@@ -220,7 +220,7 @@ const chartSeries = computed(() => {
           <span
             class="text-sm font-semibold"
             style="color: #f8f8f2"
-          >{{ formatMoney(payment.amount) }}</span>
+          >{{ formatExact(payment.amount) }}</span>
         </div>
       </div>
     </UCard>
