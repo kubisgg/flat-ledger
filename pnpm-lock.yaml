@@ -24,8 +24,8 @@ importers:
         specifier: ^4.8.1
         version: 4.8.1(@internationalized/date@3.12.1)(@internationalized/number@3.6.6)(@tiptap/extensions@3.24.0(@tiptap/core@3.24.0(@tiptap/pm@3.24.0))(@tiptap/pm@3.24.0))(@tiptap/y-tiptap@3.0.3(prosemirror-model@1.25.7)(prosemirror-state@1.4.4)(prosemirror-view@1.41.8)(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30))(change-case@5.4.4)(db0@0.3.4(better-sqlite3@12.11.1)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.11.1)(kysely@0.29.2)))(embla-carousel@8.6.0)(ioredis@5.11.1)(magicast@0.5.3)(tailwindcss@4.3.0)(typescript@6.0.3)(valibot@1.4.1(typescript@6.0.3))(vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(vue-router@5.1.0(@vue/compiler-sfc@3.5.35)(vite@7.3.5(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.32.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3)))(vue@3.5.35(typescript@6.0.3))(yjs@13.6.30)(zod@4.4.3)
       apexcharts:
-        specifier: ^5.14.0
-        version: 5.14.0
+        specifier: ^5.15.2
+        version: 5.15.2
       better-auth:
         specifier: ^1.6.19
         version: 1.6.19(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.11.1)(kysely@0.29.2))(vue@3.5.35(typescript@6.0.3))
@@ -43,7 +43,7 @@ importers:
         version: 4.3.0
       vue3-apexcharts:
         specifier: ^1.11.1
-        version: 1.11.1(apexcharts@5.14.0)(vue@3.5.35(typescript@6.0.3))
+        version: 1.11.1(apexcharts@5.15.2)(vue@3.5.35(typescript@6.0.3))
     devDependencies:
       '@nuxt/eslint':
         specifier: ^1.16.0
@@ -2998,8 +2998,8 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apexcharts@5.14.0:
-    resolution: {integrity: sha512-hBLz5Gd8B5ZuocEzNUwEeKdw9vd7uy4OnqbDjAYyvwiAEyHk3OnO9+tGzAznpM6pnyCqWjPXUKKYoNIwdskeuQ==}
+  apexcharts@5.15.2:
+    resolution: {integrity: sha512-qbd+ehDiRxo++wAqaGLmJcd683ktulTqoku4WYYyQ3XOgJIn4yhOQGV27KcdK7c2yhwxblyh4mgMm8ukI0wC0Q==}
 
   archiver-utils@5.0.2:
     resolution: {integrity: sha512-wuLJMmIBQYCsGZgYLTy5FIB2pF6Lfb6cXMSF8Qywwk3t20zWnAi7zLcQFdKQmIB8wyZpY5ER38x08GbwtR2cLA==}
@@ -8868,7 +8868,7 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  apexcharts@5.14.0: {}
+  apexcharts@5.15.2: {}
 
   archiver-utils@5.0.2:
     dependencies:
@@ -12132,9 +12132,9 @@ snapshots:
       '@vue/language-core': 3.3.4
       typescript: 6.0.3
 
-  vue3-apexcharts@1.11.1(apexcharts@5.14.0)(vue@3.5.35(typescript@6.0.3)):
+  vue3-apexcharts@1.11.1(apexcharts@5.15.2)(vue@3.5.35(typescript@6.0.3)):
     dependencies:
-      apexcharts: 5.14.0
+      apexcharts: 5.15.2
       vue: 3.5.35(typescript@6.0.3)
 
   vue@3.5.35(typescript@6.0.3):
