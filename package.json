@@ -22,7 +22,7 @@
     "better-sqlite3": "^12.11.1",
     "drizzle-orm": "^0.45.1",
     "nuxt": "^4.4.8",
-    "tailwindcss": "^4.3.0",
+    "tailwindcss": "^4.3.2",
     "vue3-apexcharts": "^1.11.1"
   },
   "devDependencies": {
