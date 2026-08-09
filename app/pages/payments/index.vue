@@ -82,7 +82,7 @@ async function confirmRemovePayment() {
                 icon="i-lucide-trash-2"
                 color="error"
                 variant="ghost"
-                @click="deletePaymentId = payment.id"
+                @click="() => { deletePaymentId = payment.id }"
               />
             </div>
           </div>
@@ -119,7 +119,7 @@ async function confirmRemovePayment() {
           label="Anuluj"
           color="neutral"
           variant="outline"
-          @click="deletePaymentId = null"
+          @click="() => { deletePaymentId = null }"
         />
         <UButton
           label="Usuń"

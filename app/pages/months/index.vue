@@ -209,7 +209,7 @@ async function confirmRemoveMonth() {
                 icon="i-lucide-trash-2"
                 color="error"
                 variant="ghost"
-                @click="deleteMonthId = month.id"
+                @click="() => { deleteMonthId = month.id }"
               />
             </div>
           </div>
@@ -246,7 +246,7 @@ async function confirmRemoveMonth() {
           label="Anuluj"
           color="neutral"
           variant="outline"
-          @click="deleteMonthId = null"
+          @click="() => { deleteMonthId = null }"
         />
         <UButton
           label="Usuń"
