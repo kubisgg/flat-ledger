@@ -184,13 +184,13 @@ function kindLabel() {
             icon="i-lucide-x"
             color="neutral"
             variant="ghost"
-            @click="editing = false"
+            @click="() => { editing = false }"
           />
           <UButton
             icon="i-lucide-trash-2"
             color="error"
             variant="ghost"
-            @click="confirmDelete = true"
+            @click="() => { confirmDelete = true }"
           />
         </div>
         <UButton
@@ -216,7 +216,7 @@ function kindLabel() {
         label="Anuluj"
         color="neutral"
         variant="outline"
-        @click="confirmDelete = false"
+        @click="() => { confirmDelete = false }"
       />
       <UButton
         label="Usuń"
