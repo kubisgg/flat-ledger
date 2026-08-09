@@ -36,10 +36,8 @@
     "vue-tsc": "^3.3.9"
   },
   "packageManager": "pnpm@11.5.2",
-  "pnpm": {
-    "patchedDependencies": {
-      "h3@2.0.1-rc.22": "patches/h3@2.0.1-rc.22.patch"
-    }
+  "engines": {
+    "node": ">=24 <25"
   },
   "lint-staged": {
     "*.{vue,ts,js}": "eslint --fix"
