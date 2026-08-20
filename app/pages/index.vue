@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { ApexOptions } from 'apexcharts'
+
+const ApexChart = defineAsyncComponent(() => import('vue3-apexcharts'))
+
 const { formatMoney, formatExact } = useMoney()
 const { data } = await useFetch('/api/dashboard')
 const { data: meterHistory } = await useFetch('/api/dashboard/meter-history')
@@ -9,7 +13,7 @@ const statusLabel = computed(() => ({
   unpaid: 'do zapłaty'
 }[data.value?.status || 'unpaid']))
 
-const chartOptions = computed(() => ({
+const chartOptions = computed<ApexOptions>(() => ({
   chart: {
     type: 'line',
     background: 'transparent',
@@ -177,7 +181,7 @@ const chartSeries = computed(() => {
           </h2>
         </template>
         <ClientOnly>
-          <apexchart
+          <ApexChart
             type="line"
             height="280"
             :options="chartOptions"

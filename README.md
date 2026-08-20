@@ -49,6 +49,7 @@ Not intended to be exposed to the public internet - runs on a home server in a l
 | `DATABASE_URL` | SQLite file path - dev only |
 | `AUTH_SECRET` | Random secret for Better Auth |
 | `AUTH_URL` | App URL used for auth redirects |
+| `DEV_SERVER_ALLOWED_HOSTS` | Optional comma-separated hostnames allowed to access the local dev server |
 | `ADMIN_EMAIL` | Initial admin account email |
 | `ADMIN_PASSWORD` | Initial admin account password |
 | `ADMIN_NAME` | Initial admin account name |
