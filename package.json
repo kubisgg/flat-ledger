@@ -15,7 +15,7 @@
   "dependencies": {
     "@better-auth/drizzle-adapter": "^1.6.14",
     "@iconify-json/lucide": "^1.2.115",
-    "@iconify-json/simple-icons": "^1.2.86",
+    "@iconify-json/simple-icons": "^1.2.93",
     "@nuxt/ui": "^4.10.0",
     "apexcharts": "^6.8.0",
     "better-auth": "^1.6.19",
