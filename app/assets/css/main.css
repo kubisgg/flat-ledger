@@ -4,7 +4,6 @@
 @theme static {
   --font-sans: 'DM Sans', 'Aptos', ui-sans-serif, system-ui, sans-serif;
 
-  /* Dracula purple */
   --color-primary-50: #f5f0ff;
   --color-primary-100: #ede0ff;
   --color-primary-200: #d9beff;
@@ -61,6 +60,11 @@ body {
   padding-left: calc(0.5rem + env(safe-area-inset-left, 0px));
 }
 
+.app-nav-link:not([aria-current='page']):hover {
+  background-color: rgba(168, 124, 240, 0.05);
+  color: var(--ui-primary);
+}
+
 @media (min-width: 48rem) {
   .app-main {
     padding-bottom: 0;
@@ -83,7 +87,6 @@ h1, h2, h3 {
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
-/* Override Nuxt UI dark mode tokens with Dracula palette */
 .dark {
   --ui-bg: #1e1f29;
   --ui-bg-muted: #21222c;

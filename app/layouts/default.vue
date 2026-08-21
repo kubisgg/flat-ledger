@@ -14,8 +14,8 @@ async function logout() {
   await navigateTo('/login')
 }
 
-function isActive(item: { to: string }) {
-  return route.path === item.to || (item.to !== '/' && route.path.startsWith(item.to))
+function isActive(path: string) {
+  return route.path === path || (path !== '/' && route.path.startsWith(path))
 }
 </script>
 
@@ -55,9 +55,11 @@ function isActive(item: { to: string }) {
             :key="item.to"
             :to="item.to"
             :icon="item.icon"
-            :color="isActive(item) ? 'primary' : 'neutral'"
-            :variant="isActive(item) ? 'subtle' : 'ghost'"
+            :color="isActive(item.to) ? 'primary' : 'neutral'"
+            :variant="isActive(item.to) ? 'subtle' : 'ghost'"
             size="sm"
+            class="app-nav-link"
+            :aria-current="isActive(item.to) ? 'page' : undefined"
           >
             {{ item.label }}
           </UButton>
@@ -66,14 +68,16 @@ function isActive(item: { to: string }) {
         <div class="flex items-center gap-1">
           <UButton
             icon="i-lucide-user-cog"
-            color="neutral"
-            variant="ghost"
+            :color="isActive('/account') ? 'primary' : 'neutral'"
+            :variant="isActive('/account') ? 'subtle' : 'ghost'"
             to="/account"
+            class="app-nav-link"
             aria-label="Zarządzaj kontem"
+            :aria-current="isActive('/account') ? 'page' : undefined"
           />
           <UButton
             icon="i-lucide-log-out"
-            color="neutral"
+            color="error"
             variant="ghost"
             aria-label="Wyloguj"
             @click="logout"
@@ -95,10 +99,12 @@ function isActive(item: { to: string }) {
           :key="item.to"
           :to="item.to"
           :icon="item.icon"
-          :color="isActive(item) ? 'primary' : 'neutral'"
-          :variant="isActive(item) ? 'soft' : 'ghost'"
+          :color="isActive(item.to) ? 'primary' : 'neutral'"
+          :variant="isActive(item.to) ? 'subtle' : 'ghost'"
           size="sm"
           block
+          class="app-nav-link"
+          :aria-current="isActive(item.to) ? 'page' : undefined"
         >
           {{ item.label }}
         </UButton>
