@@ -18,11 +18,53 @@
   --color-primary-950: #1a0a45;
 }
 
+html,
 body {
   min-height: 100vh;
+  min-height: 100dvh;
+}
+
+html {
+  background-color: #21222c;
+}
+
+body {
+  background-color: #21222c;
+  color: #f8f8f2;
+}
+
+.app-page {
   background-color: #282a36;
   background-image: radial-gradient(ellipse 65% 45% at 8% 0%, rgba(189, 147, 249, 0.07) 0%, transparent 55%);
-  color: #f8f8f2;
+}
+
+.app-shell {
+  min-height: 100dvh;
+}
+
+.app-header {
+  padding-top: env(safe-area-inset-top, 0px);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  isolation: isolate;
+}
+
+.app-main {
+  padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+}
+
+.mobile-nav {
+  padding-top: 0.5rem;
+  padding-right: calc(0.5rem + env(safe-area-inset-right, 0px));
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  padding-left: calc(0.5rem + env(safe-area-inset-left, 0px));
+}
+
+@media (min-width: 48rem) {
+  .app-main {
+    padding-bottom: 0;
+  }
 }
 
 h1, h2, h3 {

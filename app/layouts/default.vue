@@ -22,16 +22,16 @@ function isActive(item: { to: string }) {
 <template>
   <div
     v-if="route.path === '/login'"
-    class="min-h-screen text-[#f8f8f2]"
+    class="app-page min-h-screen text-[#f8f8f2]"
   >
     <slot />
   </div>
 
   <div
     v-else
-    class="min-h-screen text-[#f8f8f2]"
+    class="app-page app-shell min-h-screen text-[#f8f8f2]"
   >
-    <header class="sticky top-0 z-20 border-b border-[#44475a]/60 bg-[#21222c]/95 backdrop-blur-md">
+    <header class="app-header fixed inset-x-0 top-0 z-30 border-b border-[#44475a]/60 bg-[#21222c]/95 backdrop-blur-md">
       <UContainer class="flex h-16 items-center justify-between gap-4">
         <NuxtLink
           to="/"
@@ -82,13 +82,13 @@ function isActive(item: { to: string }) {
       </UContainer>
     </header>
 
-    <main>
+    <main class="app-main">
       <UContainer class="py-6 sm:py-8">
         <slot />
       </UContainer>
     </main>
 
-    <nav class="fixed inset-x-0 bottom-0 z-20 border-t border-[#44475a]/60 bg-[#21222c]/95 p-2 backdrop-blur-md md:hidden">
+    <nav class="mobile-nav fixed inset-x-0 bottom-0 z-20 border-t border-[#44475a]/60 bg-[#21222c]/95 backdrop-blur-md md:hidden">
       <div class="grid grid-cols-4 gap-1">
         <UButton
           v-for="item in nav"
