@@ -27,6 +27,8 @@ const { data: settings } = await useFetch('/api/settings', {
 const readings = reactive<Record<string, number>>({})
 const variableAmounts = reactive<Record<string, number>>({})
 const notes = reactive<Record<string, string>>({})
+const transferTitleCopied = ref(false)
+let copyResetTimer: ReturnType<typeof setTimeout> | undefined
 
 const meteredPayments = computed(() => data.value?.payments.filter(payment => payment.type?.isMetered) || [])
 const editablePayments = computed(() => data.value?.payments.filter(payment => payment.type?.isMetered || payment.type?.kind === 'variable' || !payment.type) || [])
@@ -112,6 +114,55 @@ async function toggleRequired(paymentId: number, isRequired: boolean) {
   })
   await refresh()
 }
+
+async function copyTransferTitle() {
+  if (!transferTitle.value || transferTitleCopied.value) return
+
+  try {
+    let copied = false
+
+    if (navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(transferTitle.value)
+        copied = true
+      } catch {
+        copied = false
+      }
+    }
+
+    if (!copied && import.meta.dev) {
+      const textarea = document.createElement('textarea')
+      textarea.value = transferTitle.value
+      textarea.setAttribute('readonly', '')
+      textarea.style.position = 'fixed'
+      textarea.style.opacity = '0'
+      document.body.appendChild(textarea)
+      textarea.select()
+      textarea.setSelectionRange(0, textarea.value.length)
+
+      try {
+        copied = document.execCommand('copy')
+      } finally {
+        textarea.remove()
+      }
+    }
+
+    if (!copied) throw new Error('Copy command failed')
+    transferTitleCopied.value = true
+    if (copyResetTimer) clearTimeout(copyResetTimer)
+    copyResetTimer = setTimeout(() => {
+      transferTitleCopied.value = false
+      copyResetTimer = undefined
+    }, 3000)
+    toast.add({ title: 'Skopiowano tytuł przelewu', color: 'success' })
+  } catch {
+    toast.add({ title: 'Nie udało się skopiować tytułu', color: 'error' })
+  }
+}
+
+onBeforeUnmount(() => {
+  if (copyResetTimer) clearTimeout(copyResetTimer)
+})
 </script>
 
 <template>
@@ -163,9 +214,35 @@ async function toggleRequired(paymentId: number, isRequired: boolean) {
           <p class="text-sm text-stone-400">
             Tytuł przelewu
           </p>
-          <p class="mt-1 text-stone-200">
-            {{ transferTitle || 'brak' }}
-          </p>
+          <div class="mt-1 flex items-center gap-2">
+            <p class="text-stone-200">
+              {{ transferTitle || 'brak' }}
+            </p>
+            <UButton
+              :color="transferTitleCopied ? 'success' : 'neutral'"
+              :variant="transferTitleCopied ? 'subtle' : 'ghost'"
+              size="xs"
+              square
+              :class="['duration-200 disabled:opacity-100', { 'app-nav-link': !transferTitleCopied }]"
+              :disabled="!transferTitle || transferTitleCopied"
+              :aria-label="transferTitleCopied ? 'Skopiowano tytuł przelewu' : 'Kopiuj tytuł przelewu'"
+              :title="transferTitleCopied ? 'Skopiowano tytuł przelewu' : 'Kopiuj tytuł przelewu'"
+              @click="copyTransferTitle"
+            >
+              <span class="relative size-4">
+                <UIcon
+                  name="i-lucide-copy"
+                  class="absolute inset-0 size-4 transition-[opacity,transform] duration-200 ease-out"
+                  :class="transferTitleCopied ? 'scale-75 opacity-0' : 'scale-100 opacity-100'"
+                />
+                <UIcon
+                  name="i-lucide-check"
+                  class="absolute inset-0 size-4 transition-[opacity,transform] duration-200 ease-out"
+                  :class="transferTitleCopied ? 'scale-100 opacity-100' : 'scale-75 opacity-0'"
+                />
+              </span>
+            </UButton>
+          </div>
         </div>
       </div>
     </UCard>
