@@ -24,8 +24,8 @@ importers:
         specifier: ^4.10.0
         version: 4.10.0(a4165a915e0360841acc959832e99d07)
       apexcharts:
-        specifier: ^6.8.0
-        version: 6.8.0
+        specifier: ^7.1.0
+        version: 7.1.0
       better-auth:
         specifier: ^1.6.29
         version: 1.6.29(better-sqlite3@12.11.1)(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@types/better-sqlite3@7.6.13)(better-sqlite3@12.11.1)(kysely@0.29.5))(vue@3.5.41(typescript@6.0.3))
@@ -43,7 +43,7 @@ importers:
         version: 4.3.3
       vue3-apexcharts:
         specifier: ^1.11.1
-        version: 1.11.1(apexcharts@6.8.0)(vue@3.5.41(typescript@6.0.3))
+        version: 1.11.1(apexcharts@7.1.0)(vue@3.5.41(typescript@6.0.3))
     devDependencies:
       '@nuxt/eslint':
         specifier: ^1.16.0
@@ -2940,8 +2940,11 @@ packages:
     resolution: {integrity: sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==}
     engines: {node: '>= 8'}
 
-  apexcharts@6.8.0:
-    resolution: {integrity: sha512-ifEl3w/NAMsKQ60JNDD8nRCGdnGeuuKNvUzZTQpPr/3JNewoZv98H42VpXFB96sHle/8GDsHn/NQp785xsNh4A==}
+  apex-commons@0.5.0:
+    resolution: {integrity: sha512-xz83SgPREE1wGtoflvxjwJtcjzl5bKTz2/bDxWCZNL6QVjUNE47kMg/1Zqt0bSh6eOnmFCWlTDc3RU8o85N+wg==}
+
+  apexcharts@7.1.0:
+    resolution: {integrity: sha512-zO43jUhHBNz+riahvkVvlqYw8Zpog5KtpdVSc9PbvOiXAmPBaSSoleUtO83NktObHZ9LnNt3M4MdYx7m+aSDMw==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
   archiver-utils@5.0.2:
@@ -9059,7 +9062,11 @@ snapshots:
       normalize-path: 3.0.0
       picomatch: 2.3.2
 
-  apexcharts@6.8.0: {}
+  apex-commons@0.5.0: {}
+
+  apexcharts@7.1.0:
+    dependencies:
+      apex-commons: 0.5.0
 
   archiver-utils@5.0.2:
     dependencies:
@@ -12448,9 +12455,9 @@ snapshots:
       '@vue/language-core': 3.3.9
       typescript: 6.0.3
 
-  vue3-apexcharts@1.11.1(apexcharts@6.8.0)(vue@3.5.41(typescript@6.0.3)):
+  vue3-apexcharts@1.11.1(apexcharts@7.1.0)(vue@3.5.41(typescript@6.0.3)):
     dependencies:
-      apexcharts: 6.8.0
+      apexcharts: 7.1.0
       vue: 3.5.41(typescript@6.0.3)
 
   vue@3.5.41(typescript@6.0.3):
