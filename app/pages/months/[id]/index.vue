@@ -30,7 +30,7 @@ const notes = reactive<Record<string, string>>({})
 const transferTitleCopied = ref(false)
 let copyResetTimer: ReturnType<typeof setTimeout> | undefined
 
-const meteredPayments = computed(() => data.value?.payments.filter(payment => payment.type?.isMetered) || [])
+const meteredPayments = computed(() => data.value?.payments.filter(payment => payment.type?.isMetered && payment.meter) || [])
 const editablePayments = computed(() => data.value?.payments.filter(payment => payment.type?.isMetered || payment.type?.kind === 'variable' || !payment.type) || [])
 const floorMoney = (value: number) => Math.floor(value * 100) / 100
 const slug = (value: string) => value.toLowerCase()
@@ -383,5 +383,31 @@ onBeforeUnmount(() => {
         </table>
       </div>
     </UCard>
+
+    <NuxtLink
+      v-if="meteredPayments.length"
+      :to="`/months/${route.params.id}/readings`"
+      class="meter-entry-fab fixed z-30 grid size-13 place-items-center rounded-full p-0 shadow-lg shadow-black/45 transition-transform outline-none active:scale-95 md:hidden"
+      aria-label="Wpisz stany liczników"
+      title="Wpisz stany liczników"
+    >
+      <UIcon
+        name="i-lucide-plus"
+        class="block size-6 shrink-0"
+      />
+    </NuxtLink>
   </div>
 </template>
+
+<style scoped>
+.meter-entry-fab {
+  right: calc(1rem + env(safe-area-inset-right, 0px));
+  bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+  color: var(--ui-text-inverted);
+  background-color: var(--ui-primary);
+}
+
+.meter-entry-fab:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ui-primary) 25%, transparent);
+}
+</style>
