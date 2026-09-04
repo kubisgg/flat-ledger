@@ -19,6 +19,23 @@ useHead({
 const title = 'Flat Ledger'
 const description = 'Prywatny panel do zarządzania opłatami za mieszkanie.'
 const colorMode = useColorMode()
+const isMobileViewport = ref(false)
+
+let mobileViewportQuery: MediaQueryList | undefined
+
+function updateMobileViewport(event: MediaQueryList | MediaQueryListEvent) {
+  isMobileViewport.value = event.matches
+}
+
+onMounted(() => {
+  mobileViewportQuery = window.matchMedia('(max-width: 767px)')
+  updateMobileViewport(mobileViewportQuery)
+  mobileViewportQuery.addEventListener('change', updateMobileViewport)
+})
+
+onBeforeUnmount(() => {
+  mobileViewportQuery?.removeEventListener('change', updateMobileViewport)
+})
 
 colorMode.preference = 'dark'
 
@@ -32,7 +49,14 @@ useSeoMeta({
 </script>
 
 <template>
-  <UApp>
+  <UApp
+    :toaster="{
+      position: isMobileViewport ? 'top-center' : 'bottom-right',
+      ui: {
+        viewport: isMobileViewport ? 'mobile-toast-viewport' : undefined
+      }
+    }"
+  >
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
