@@ -20,11 +20,27 @@ export default defineEventHandler(async (event) => {
     .where(eq(payments.monthId, monthId))
     .all()
 
-  for (const row of rows) {
-    const currentValue = toNumber(currentReadings[String(row.payment.id)], row.meter.currentValue)
-    const usage = Math.max(currentValue - row.meter.previousValue, 0)
+  const meterUpdates = rows.flatMap((row) => {
+    const key = String(row.payment.id)
+    if (!Object.hasOwn(currentReadings, key)) return []
+
+    const rawValue = currentReadings[key]
+    if ((typeof rawValue !== 'number' && typeof rawValue !== 'string') || (typeof rawValue === 'string' && rawValue.trim() === '')) {
+      throw createError({ statusCode: 400, statusMessage: `Invalid meter reading for ${row.payment.name}` })
+    }
+
+    const currentValue = Number(rawValue)
+    if (!Number.isFinite(currentValue) || currentValue < row.meter.previousValue) {
+      throw createError({ statusCode: 400, statusMessage: `Invalid meter reading for ${row.payment.name}` })
+    }
+
+    const usage = currentValue - row.meter.previousValue
     const amount = floorMoney(usage * row.meter.unitPrice)
 
+    return [{ row, currentValue, usage, amount }]
+  })
+
+  for (const { row, currentValue, usage, amount } of meterUpdates) {
     db.update(meterReadings).set({
       currentValue,
       usage,
