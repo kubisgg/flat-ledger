@@ -25,6 +25,7 @@ body {
 
 html {
   background-color: #21222c;
+  scrollbar-gutter: stable;
 }
 
 body {
