@@ -37,12 +37,7 @@ function isActive(path: string) {
           to="/"
           class="flex items-center gap-3"
         >
-          <span class="grid size-9 place-items-center rounded-lg bg-linear-to-br from-primary-400 to-primary-700 text-white shadow-lg shadow-purple-950/60 ring-1 ring-primary-400/25">
-            <UIcon
-              name="i-lucide-home"
-              class="size-5"
-            />
-          </span>
+          <AppLogo />
           <span
             class="font-semibold tracking-tight"
             style="font-family: 'Outfit', sans-serif; color: #f8f8f2"

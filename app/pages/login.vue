@@ -35,12 +35,10 @@ async function submit() {
       <template #header>
         <div class="space-y-1">
           <div class="flex items-center gap-2 mb-3">
-            <span class="grid size-8 place-items-center rounded-lg bg-linear-to-br from-primary-400 to-primary-700 text-white shadow-lg shadow-purple-950/60 ring-1 ring-primary-400/25">
-              <UIcon
-                name="i-lucide-home"
-                class="size-4"
-              />
-            </span>
+            <AppLogo
+              width="32"
+              height="32"
+            />
             <span
               class="text-sm font-medium"
               style="font-family: 'Outfit', sans-serif; color: #6272a4"
