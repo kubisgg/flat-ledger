@@ -98,7 +98,7 @@ export const payments = sqliteTable('payments', {
 
 export const meterReadings = sqliteTable('meter_readings', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  paymentId: integer('payment_id').notNull().references(() => payments.id, { onDelete: 'cascade' }),
+  paymentId: integer('payment_id').notNull().unique().references(() => payments.id, { onDelete: 'cascade' }),
   previousValue: real('previous_value').notNull(),
   currentValue: real('current_value').notNull(),
   usage: real('usage').notNull(),

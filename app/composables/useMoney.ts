@@ -1,9 +1,10 @@
+import { roundToWholePln } from '#shared/utils/transfer'
+
 export function useMoney() {
-  const floorMoney = (value: number) => Math.round(value)
   const formatMoney = (value: number | null | undefined) => new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN'
-  }).format(floorMoney(value || 0))
+  }).format(roundToWholePln(value || 0))
   const formatExact = (value: number | null | undefined) => new Intl.NumberFormat('pl-PL', {
     style: 'currency',
     currency: 'PLN',

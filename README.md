@@ -13,6 +13,7 @@ Tracking monthly rent and bills in Google Sheets got annoying - updating it each
 - Meter usage history chart (last 12 months)
 - Bank transfer title generator
 - Single-user, auth-protected
+- Optional MCP server with token management in settings
 
 ## Stack
 
@@ -47,9 +48,42 @@ Not intended to be exposed to the public internet - runs on a home server in a l
 | Variable | Description |
 |---|---|
 | `DATABASE_URL` | SQLite file path - dev only |
-| `AUTH_SECRET` | Random secret for Better Auth |
-| `AUTH_URL` | App URL used for auth redirects |
+| `AUTH_SECRET` | Random secret for Better Auth and MCP token encryption; MCP requires at least 32 characters |
+| `AUTH_URL` | App URL used for auth redirects, the displayed MCP endpoint, and MCP Host/Origin validation |
 | `DEV_SERVER_ALLOWED_HOSTS` | Optional comma-separated hostnames allowed to access the local dev server |
 | `ADMIN_EMAIL` | Initial admin account email |
 | `ADMIN_PASSWORD` | Initial admin account password |
 | `ADMIN_NAME` | Initial admin account name |
+
+## MCP
+
+MCP is disabled by default. The panel lets you show or copy the token and the endpoint URL, enable/disable the server and reset the token.
+
+Connect a client that supports Streamable HTTP:
+
+```text
+URL: <AUTH_URL>/mcp
+Authorization: Bearer <token from settings>
+```
+
+The endpoint uses the official MCP TypeScript SDK v2, supports the `2026-07-28` protocol, and serves earlier Streamable HTTP clients.
+
+Available tools are read-only:
+
+| Tool | Arguments | Result |
+|---|---|---|
+| `get_latest_month_summary` | None | Latest month, full and rounded transfer amount, transfer sent flag |
+| `list_months` | Optional `page` and `itemsPerPage`, maximum 100 per page | Months, newest first, and total count |
+| `get_month_details` | `monthId` | Month, charges, charge categories and meter readings |
+| `get_meter_history` | None | Up to 12 recorded months of usage per meter type, numeric usage delta and percentage change |
+
+The tools share query and calculation functions with the application API.
+
+## Checks
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm build
+pnpm test
+```
