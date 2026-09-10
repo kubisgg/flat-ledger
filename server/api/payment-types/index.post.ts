@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
     defaultActive: body.defaultActive === true,
     defaultAmount: body.defaultAmount === '' ? null : Number(body.defaultAmount || 0),
     unitPrice: body.unitPrice === '' ? null : Number(body.unitPrice || 0),
-    unit: body.unit || null,
-    notes: body.notes || null
+    unit: body.unit || null
   }).returning().get()
 })

@@ -17,5 +17,4 @@ export interface PaymentType {
   defaultAmount?: number | null
   unitPrice?: number | null
   unit?: string | null
-  notes?: string | null
 }

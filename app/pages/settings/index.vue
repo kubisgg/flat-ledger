@@ -13,8 +13,7 @@ const form = reactive({
   defaultActive: false,
   defaultAmount: 0,
   unitPrice: 0,
-  unit: '',
-  notes: ''
+  unit: ''
 })
 const settingsForm = reactive({
   transferTitle: settings.value.transferTitle
@@ -29,7 +28,6 @@ async function createType() {
   form.defaultAmount = 0
   form.unitPrice = 0
   form.unit = ''
-  form.notes = ''
   await refresh()
 }
 
@@ -167,27 +165,30 @@ async function saveSettings() {
       </UCard>
     </div>
 
-    <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
-      <template #header>
-        <div>
-          <p class="text-sm text-stone-400">
-            Pozycje dodawane automatycznie do nowego miesiąca
-          </p>
-          <h2 class="text-xl font-semibold text-stone-50">
-            Ustawienia opłat
-          </h2>
-        </div>
-      </template>
+    <div class="space-y-6">
+      <McpSettings />
+      <UCard class="bg-[#21222c] ring-1 ring-[#44475a]/60 shadow-lg shadow-black/40">
+        <template #header>
+          <div>
+            <h2 class="text-xl font-semibold text-stone-50">
+              Ustawienia opłat
+            </h2>
+            <p class="text-sm text-stone-400">
+              Pozycje dodawane automatycznie do nowego miesiąca
+            </p>
+          </div>
+        </template>
 
-      <div class="space-y-3">
-        <PaymentTypeSettingsRow
-          v-for="type in types"
-          :key="type.id"
-          :type="type"
-          @save="updateType"
-          @remove="removeType"
-        />
-      </div>
-    </UCard>
+        <div class="space-y-3">
+          <PaymentTypeSettingsRow
+            v-for="type in types"
+            :key="type.id"
+            :type="type"
+            @save="updateType"
+            @remove="removeType"
+          />
+        </div>
+      </UCard>
+    </div>
   </div>
 </template>

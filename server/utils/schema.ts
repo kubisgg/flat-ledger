@@ -68,7 +68,6 @@ export const paymentTypes = sqliteTable('payment_types', {
   defaultAmount: real('default_amount'),
   unitPrice: real('unit_price'),
   unit: text('unit'),
-  notes: text('notes'),
   createdAt: text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: text('updated_at').notNull().default(sql`CURRENT_TIMESTAMP`)
 })
@@ -98,7 +97,7 @@ export const payments = sqliteTable('payments', {
 
 export const meterReadings = sqliteTable('meter_readings', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  paymentId: integer('payment_id').notNull().references(() => payments.id, { onDelete: 'cascade' }),
+  paymentId: integer('payment_id').notNull().unique().references(() => payments.id, { onDelete: 'cascade' }),
   previousValue: real('previous_value').notNull(),
   currentValue: real('current_value').notNull(),
   usage: real('usage').notNull(),

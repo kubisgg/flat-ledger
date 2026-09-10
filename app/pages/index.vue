@@ -8,10 +8,7 @@ const { data } = await useFetch('/api/dashboard')
 const { data: meterHistory } = await useFetch('/api/dashboard/meter-history')
 const { data: session } = await useFetch('/api/session')
 
-const statusLabel = computed(() => ({
-  paid: 'opłacony',
-  unpaid: 'do zapłaty'
-}[data.value?.status || 'unpaid']))
+const statusLabel = computed(() => data.value?.paid ? 'opłacony' : 'do zapłaty')
 
 const chartOptions = computed<ApexOptions>(() => ({
   chart: {
@@ -124,7 +121,7 @@ const chartSeries = computed(() => {
         </p>
         <UBadge
           class="mt-3"
-          :color="data?.status === 'paid' ? 'success' : 'warning'"
+          :color="data?.paid ? 'success' : 'warning'"
           variant="subtle"
           size="lg"
         >

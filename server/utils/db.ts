@@ -93,7 +93,6 @@ function runMigrations(client: Database.Database) {
       default_amount REAL,
       unit_price REAL,
       unit TEXT,
-      notes TEXT,
       created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
@@ -135,6 +134,11 @@ function runMigrations(client: Database.Database) {
 
     CREATE INDEX IF NOT EXISTS meter_readings_payment_id_idx ON meter_readings(payment_id);
   `)
+
+  const typeColumns = client.pragma('table_info(payment_types)') as { name: string }[]
+  if (typeColumns.some(column => column.name === 'notes')) {
+    client.exec('ALTER TABLE payment_types DROP COLUMN notes')
+  }
 
   migrated = true
 }
