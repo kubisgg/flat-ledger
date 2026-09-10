@@ -128,17 +128,21 @@ function handleTokenCopyError(value: string | undefined) {
         />
 
         <div class="grid gap-4">
-          <UFormField label="Adres serwera">
+          <UFormField
+            v-for="(endpoint, index) in settings.endpoints"
+            :key="endpoint"
+            :label="settings.endpoints.length > 1 ? `Adres serwera ${index + 1}` : 'Adres serwera'"
+          >
             <div class="flex gap-2">
               <UInput
-                :model-value="settings.endpoint"
+                :model-value="endpoint"
                 readonly
                 class="min-w-0 flex-1"
-                aria-label="Adres serwera MCP"
+                :aria-label="`Adres serwera MCP ${index + 1}`"
               />
               <CopyButton
-                :text="settings.endpoint"
-                label="Kopiuj adres serwera MCP"
+                :text="endpoint"
+                :label="`Kopiuj adres serwera MCP ${index + 1}`"
                 copied-label="Skopiowano adres serwera MCP"
                 :disabled="busy"
                 @update:copying="busy = $event"

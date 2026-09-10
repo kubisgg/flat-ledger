@@ -22,7 +22,8 @@ test('MCP HTTP security boundaries', { timeout: 60000 }, async (t) => {
     env: {
       ...process.env, NODE_ENV: 'production', HOST: '127.0.0.1', PORT: String(port),
       NITRO_HOST: '127.0.0.1', NITRO_PORT: String(port), DATABASE_URL: join(directory, 'ledger.sqlite'),
-      AUTH_URL: base, AUTH_SECRET: randomBytes(32).toString('hex'), ADMIN_EMAIL: '', ADMIN_PASSWORD: ''
+      AUTH_URL: base, MCP_SERVER_URLS: ` https://mcp.example.com/, ,http://ledger.lan:3000,https://MCP.EXAMPLE.COM:443,${base}, `,
+      AUTH_SECRET: randomBytes(32).toString('hex'), ADMIN_EMAIL: '', ADMIN_PASSWORD: ''
     },
     stdio: ['ignore', 'pipe', 'pipe']
   })
@@ -82,6 +83,30 @@ test('MCP HTTP security boundaries', { timeout: 60000 }, async (t) => {
       } else req.end(body)
     })
   }
+
+  await t.test('settings list unique endpoints and every configured host and origin serves MCP', async () => {
+    const settings = await (await api('/api/settings/mcp', 'GET', undefined, { cookie })).json()
+    assert.deepEqual(settings.endpoints, [`${base}/mcp`, 'https://mcp.example.com/mcp', 'http://ledger.lan:3000/mcp'])
+    const body = JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: {
+      protocolVersion: '2026-07-28', capabilities: {}, clientInfo: { name: 'origins-test', version: '1.0.0' }
+    } })
+    for (const endpoint of settings.endpoints) {
+      const url = new URL(endpoint)
+      for (const originHeaders of [{}, { Origin: url.origin }]) {
+        const response = await raw({ Host: url.host, Accept: 'application/json, text/event-stream', ...originHeaders }, body)
+        assert.equal(response.status, 200, endpoint)
+        const payload = response.headers['content-type']?.includes('text/event-stream')
+          ? response.text.split('\n').find(line => line.startsWith('data: ')).slice(6)
+          : response.text
+        assert.equal(JSON.parse(payload).result.serverInfo.name, 'flat-ledger')
+      }
+      assert.equal((await raw({ Host: url.host, Origin: url.origin, Authorization: '' }, body)).status, 401)
+    }
+    for (const Origin of ['https://mcp.example.com.evil.example', 'http://mcp.example.com', 'http://ledger.lan:3001']) {
+      assert.equal((await raw({ Origin }, body)).status, 403, Origin)
+    }
+    assert.equal((await raw({ Host: 'mcp.example.com.evil.example' }, body)).status, 403)
+  })
 
   await t.test('signup remains closed after the owner exists', async () => {
     const second = { ...account, email: 'second@example.local' }

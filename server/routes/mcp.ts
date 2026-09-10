@@ -3,7 +3,7 @@ import { validateHostHeader } from '@modelcontextprotocol/server'
 import { getMcpHandler } from '../mcp/server'
 import { verifyMcpToken } from '../services/mcp-settings'
 
-import { appUrl, isMcpOriginAllowed } from '../utils/mcp-guards'
+import { mcpServerUrls, isMcpOriginAllowed } from '../utils/mcp-guards'
 
 function httpError(status: number, message: string, headers: Record<string, string> = {}, code = -32000) {
   return Response.json({ jsonrpc: '2.0', id: null, error: { code, message } }, {
@@ -14,8 +14,8 @@ function httpError(status: number, message: string, headers: Record<string, stri
 
 export default defineEventHandler(async (event) => {
   event.node.res.setHeader('Cache-Control', 'no-store')
-  const url = appUrl()
-  if (!validateHostHeader(event.node.req.headers.host, [url.hostname]).ok) {
+  const hostnames = mcpServerUrls().map(origin => new URL(origin).hostname)
+  if (!validateHostHeader(event.node.req.headers.host, hostnames).ok) {
     return httpError(403, 'Invalid host')
   }
   const origin = event.node.req.headers.origin

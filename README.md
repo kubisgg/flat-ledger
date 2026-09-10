@@ -49,7 +49,8 @@ Not intended to be exposed to the public internet - runs on a home server in a l
 |---|---|
 | `DATABASE_URL` | SQLite file path - dev only |
 | `AUTH_SECRET` | Random secret for Better Auth and MCP token encryption; MCP requires at least 32 characters |
-| `AUTH_URL` | App URL used for auth redirects, the displayed MCP endpoint, and MCP Host/Origin validation |
+| `AUTH_URL` | App URL used for auth redirects and the default MCP endpoint and allowed origin |
+| `MCP_SERVER_URLS` | Additional MCP server URLs separated by commas, e.g. `https://ledger.example.com,http://192.168.1.10:3000`. Use HTTP(S) URLs without paths. `AUTH_URL` is always included. |
 | `DEV_SERVER_ALLOWED_HOSTS` | Optional comma-separated hostnames allowed to access the local dev server |
 | `ADMIN_EMAIL` | Initial admin account email |
 | `ADMIN_PASSWORD` | Initial admin account password |
@@ -57,7 +58,9 @@ Not intended to be exposed to the public internet - runs on a home server in a l
 
 ## MCP
 
-MCP is disabled by default. The panel lets you show or copy the token and the endpoint URL, enable/disable the server and reset the token.
+MCP is disabled by default. The panel lets you show or copy the token and each endpoint URL, enable/disable the server and reset the token.
+
+Set `MCP_SERVER_URLS` in `.env` and restart the app to allow additional MCP hosts and origins. The panel lists a `/mcp` endpoint for each unique origin.
 
 Connect a client that supports Streamable HTTP:
 

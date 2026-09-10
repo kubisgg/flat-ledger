@@ -50,6 +50,7 @@ test('MCP settings and stateless HTTP integration', { timeout: 60000 }, async (t
         NITRO_PORT: String(port),
         DATABASE_URL: database,
         AUTH_URL: base,
+        MCP_SERVER_URLS: '',
         AUTH_SECRET: secret,
         // Create the test account explicitly below; Nitro does not await async startup plugins.
         ADMIN_EMAIL: '',
@@ -138,7 +139,7 @@ test('MCP settings and stateless HTTP integration', { timeout: 60000 }, async (t
     assert.equal(logs.includes('responseMode: \'json\''), false)
     assert.equal(settings.enabled, false)
     assert.equal(settings.hasToken, false)
-    assert.equal(settings.endpoint, `${base}/mcp`)
+    assert.deepEqual(settings.endpoints, [`${base}/mcp`])
     assert.equal((await rpc('invalid')).status, 404)
     for (const [path, method] of [
       ['/api/settings/mcp', 'GET'], ['/api/settings/mcp', 'PUT'],

@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm'
 import { createError } from 'h3'
 import { useDb } from '../utils/db'
 import { appSettings } from '../utils/schema'
-import { appUrl } from '../utils/mcp-guards'
+import { mcpServerUrls } from '../utils/mcp-guards'
 
 interface McpConfig {
   enabled: boolean
@@ -66,7 +66,7 @@ export function getMcpSettings() {
     hasToken: !!config.encryptedToken,
     tokenReadable: !!decryptToken(config.encryptedToken),
     configured,
-    endpoint: new URL('/mcp', appUrl()).href
+    endpoints: mcpServerUrls().map(origin => new URL('/mcp', origin).href)
   }
 }
 
