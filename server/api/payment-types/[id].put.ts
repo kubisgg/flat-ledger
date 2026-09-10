@@ -16,7 +16,6 @@ export default defineEventHandler(async (event) => {
     defaultAmount: body.defaultAmount === '' ? null : Number(body.defaultAmount || 0),
     unitPrice: body.unitPrice === '' ? null : Number(body.unitPrice || 0),
     unit: body.unit || null,
-    notes: body.notes || null,
     updatedAt: nowSql()
   }).where(eq(paymentTypes.id, id)).returning().get()
 })

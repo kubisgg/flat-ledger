@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { roundToWholePln, sumTransferCharges } from '#shared/utils/transfer'
-import type { getDashboard, getMeterHistory, getMonth, listMonths } from '../services/ledger'
+import type { getDashboard, getMeterHistory, getMonth, listMonths, listChargeTypes } from '../services/ledger'
 
 const transferSent = z.boolean().describe('Whether the user marked the single monthly transfer as sent. This is not bank confirmation.')
 
@@ -137,6 +137,34 @@ export function presentMeterHistory(data: ReturnType<typeof getMeterHistory>) {
         ? null
         : Number(((meter.currentUsage - meter.previousUsage) / meter.previousUsage * 100).toFixed(2)),
       history: meter.history.map(entry => ({ year: entry.year, month: entry.month, usage: entry.usage }))
+    }))
+  }
+}
+
+export const chargeTypesSchema = z.object({
+  chargeTypes: z.array(z.object({
+    id: z.number().describe('Configured charge type ID; corresponds to chargeType.id in month details.'),
+    name: z.string(),
+    kind: z.enum(['fixed', 'metered', 'variable']).describe('Fixed amount, calculated from meter usage, or a variable monthly amount.'),
+    required: z.boolean().describe('Whether this type is configured as a required charge.'),
+    includedByDefault: z.boolean().describe('Whether this charge is included when creating a new month. Existing months can have different settings.'),
+    defaultAmount: z.number().describe('Default charge amount in PLN, if configured. Not an actual charge for a specific month.').nullable(),
+    unitPrice: z.number().describe('Configured price in PLN per measurement unit, if applicable.').nullable(),
+    unit: z.string().describe('Measurement unit, for example kWh or m3.').nullable()
+  })).describe('All currently configured charge types, sorted by name, including optional types.')
+})
+
+export function presentChargeTypes(data: ReturnType<typeof listChargeTypes>) {
+  return {
+    chargeTypes: data.map(type => ({
+      id: type.id,
+      name: type.name,
+      kind: type.kind,
+      required: type.isRequired,
+      includedByDefault: type.isRequired || type.defaultActive,
+      defaultAmount: type.defaultAmount,
+      unitPrice: type.unitPrice,
+      unit: type.unit
     }))
   }
 }

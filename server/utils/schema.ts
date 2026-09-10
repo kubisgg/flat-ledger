@@ -68,7 +68,6 @@ export const paymentTypes = sqliteTable('payment_types', {
   defaultAmount: real('default_amount'),
   unitPrice: real('unit_price'),
   unit: text('unit'),
-  notes: text('notes'),
   createdAt: text('created_at').notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: text('updated_at').notNull().default(sql`CURRENT_TIMESTAMP`)
 })

@@ -13,8 +13,7 @@ const form = reactive({
   defaultActive: false,
   defaultAmount: 0,
   unitPrice: 0,
-  unit: '',
-  notes: ''
+  unit: ''
 })
 const settingsForm = reactive({
   transferTitle: settings.value.transferTitle
@@ -29,7 +28,6 @@ async function createType() {
   form.defaultAmount = 0
   form.unitPrice = 0
   form.unit = ''
-  form.notes = ''
   await refresh()
 }
 

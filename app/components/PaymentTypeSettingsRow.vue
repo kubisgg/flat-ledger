@@ -19,8 +19,7 @@ const draft = reactive({
   defaultActive: props.type.defaultActive || false,
   defaultAmount: props.type.defaultAmount || 0,
   unitPrice: props.type.unitPrice || 0,
-  unit: props.type.unit || '',
-  notes: props.type.notes || ''
+  unit: props.type.unit || ''
 })
 const { formatExact } = useMoney()
 
@@ -41,7 +40,6 @@ function startEdit() {
   draft.defaultAmount = props.type.defaultAmount || 0
   draft.unitPrice = props.type.unitPrice || 0
   draft.unit = props.type.unit || ''
-  draft.notes = props.type.notes || ''
   editing.value = true
 }
 

@@ -73,6 +73,7 @@ Available tools are read-only:
 | Tool | Arguments | Result |
 |---|---|---|
 | `get_latest_month_summary` | None | Latest month, full and rounded transfer amount, transfer sent flag |
+| `list_charge_types` | None | All configured charge types, default amounts, unit prices and default inclusion settings |
 | `list_months` | Optional `page` and `itemsPerPage`, maximum 100 per page | Months, newest first, and total count |
 | `get_month_details` | `monthId` | Month, charges, charge categories and meter readings |
 | `get_meter_history` | None | Up to 12 recorded months of usage per meter type, numeric usage delta and percentage change |

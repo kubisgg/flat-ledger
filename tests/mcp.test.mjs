@@ -182,7 +182,7 @@ test('MCP settings and stateless HTTP integration', { timeout: 60000 }, async (t
     assert.equal(hostStatus, 403)
   })
 
-  await t.test('SDK client lists four read-only tools and presents API data with MCP field names', async () => {
+  await t.test('SDK client lists five read-only tools and presents API data with MCP field names', async () => {
     const emptyDashboard = await json('/api/dashboard')
     assert.equal(emptyDashboard.month, null)
     assert.equal(emptyDashboard.total, 0)
@@ -203,7 +203,7 @@ test('MCP settings and stateless HTTP integration', { timeout: 60000 }, async (t
     try {
       await client.connect(transport)
       const { tools } = await client.listTools()
-      assert.deepEqual(tools.map(tool => tool.name).sort(), ['get_latest_month_summary', 'get_meter_history', 'get_month_details', 'list_months'])
+      assert.deepEqual(tools.map(tool => tool.name).sort(), ['get_latest_month_summary', 'get_meter_history', 'get_month_details', 'list_charge_types', 'list_months'])
       assert.ok(tools.every(tool => tool.annotations.readOnlyHint))
       const expectedMonth = {
         id: month.id, name: month.name, year: month.year, month: month.month,
@@ -213,12 +213,21 @@ test('MCP settings and stateless HTTP integration', { timeout: 60000 }, async (t
         id: charge.id, name: charge.name, amount: charge.amount,
         includedInTransfer: charge.isRequired, note: charge.note
       })
+      const configuredTypes = await json('/api/payment-types')
+      assert.ok(configuredTypes.every(type => !('notes' in type)))
       const dashboard = await json('/api/dashboard')
       const details = await json(`/api/months/${month.id}`)
       for (const [name, args, expected] of [
         ['get_latest_month_summary', {}, {
           month: expectedMonth, transferAmount: dashboard.total, roundedTransferAmount: Math.round(dashboard.total), transferSent: dashboard.paid,
           charges: dashboard.payments.map(expectedCharge), unsentMonthCount: dashboard.openMonths
+        }],
+        ['list_charge_types', {}, {
+          chargeTypes: configuredTypes.map(type => ({
+            id: type.id, name: type.name, kind: type.kind, required: type.isRequired,
+            includedByDefault: type.isRequired || type.defaultActive,
+            defaultAmount: type.defaultAmount, unitPrice: type.unitPrice, unit: type.unit
+          }))
         }],
         ['list_months', { itemsPerPage: 10 }, { months: [expectedMonth], totalMonthCount: 1 }],
         ['get_month_details', { monthId: month.id }, {

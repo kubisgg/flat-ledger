@@ -1,8 +1,8 @@
 import { createMcpHandler, McpServer } from '@modelcontextprotocol/server'
 import { z } from 'zod'
-import { getDashboard, getMeterHistory, getMonth, listMonths } from '../services/ledger'
+import { getDashboard, getMeterHistory, getMonth, listMonths, listChargeTypes } from '../services/ledger'
 
-import { meterHistorySchema, presentMeterHistory, monthDetailsSchema, monthsSchema, presentMonthDetails, presentMonths, presentSummary, summarySchema } from './responses'
+import { chargeTypesSchema, presentChargeTypes, meterHistorySchema, presentMeterHistory, monthDetailsSchema, monthsSchema, presentMonthDetails, presentMonths, presentSummary, summarySchema } from './responses'
 
 const annotations = { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
 
@@ -53,6 +53,13 @@ function createHandler() {
       outputSchema: meterHistorySchema,
       annotations
     }, async () => result(presentMeterHistory(getMeterHistory())))
+
+    server.registerTool('list_charge_types', {
+      description: 'List all currently configured charge types, such as electricity, water or rent, with their default amounts, unit prices and inclusion settings. These are configuration templates, not charges or amounts due for a particular month. Use get_month_details for actual monthly charges.',
+      inputSchema: z.object({}).strict(),
+      outputSchema: chargeTypesSchema,
+      annotations
+    }, async () => result(presentChargeTypes(listChargeTypes())))
 
     return server
   }, { responseMode: 'json' })

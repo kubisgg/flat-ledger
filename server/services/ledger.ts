@@ -1,5 +1,5 @@
 import { sumTransferCharges } from '#shared/utils/transfer'
-import { count, desc, eq, sql } from 'drizzle-orm'
+import { asc, count, desc, eq, sql } from 'drizzle-orm'
 import { createError } from 'h3'
 import { useDb } from '../utils/db'
 import { meterReadings, months, paymentTypes, payments } from '../utils/schema'
@@ -122,4 +122,8 @@ export function getMeterHistory() {
   }
 
   return result
+}
+
+export function listChargeTypes() {
+  return useDb().select().from(paymentTypes).orderBy(asc(paymentTypes.name)).all()
 }
