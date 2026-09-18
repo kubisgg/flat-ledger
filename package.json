@@ -19,7 +19,7 @@
     "@iconify-json/simple-icons": "^1.2.94",
     "@modelcontextprotocol/node": "^2.0.0",
     "@modelcontextprotocol/server": "^2.0.0",
-    "@nuxt/ui": "^4.10.0",
+    "@nuxt/ui": "^4.11.1",
     "apexcharts": "^7.1.0",
     "better-auth": "^1.6.29",
     "better-sqlite3": "^12.11.1",
